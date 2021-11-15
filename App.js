@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,6 +10,7 @@ import ChildMain from './src/routes/ChildMain';
 import Mission from './src/routes/Mission';
 import Analysis from './src/routes/Analysis';
 import Transfer from './src/routes/Transfer';
+import Login from './src/routes/Login';
 
 
 const Stack = createNativeStackNavigator();
@@ -34,10 +35,13 @@ const ChildStackScreen = () => {
 
 
 export default function App() {
+  const [login, setLogin] = useState(false);
+
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
-      <Stack.Navigator
+      {login ? (
+        <Stack.Navigator
         initialRouteName="Main"
         screenOptions={{
           headerShown: false,
@@ -50,6 +54,16 @@ export default function App() {
         <Stack.Screen name="Transfer" component={Transfer} />
         <Stack.Screen name="ChildScreen" component={ChildStackScreen} />
       </Stack.Navigator>
+      ) : (
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            // cardStyle: { backgroundColor: 'white' }
+          }}
+        >
+          <Stack.Screen name="Login" component={Login} />
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 }
