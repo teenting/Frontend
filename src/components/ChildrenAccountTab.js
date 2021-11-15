@@ -17,7 +17,6 @@ export default function ChildrenAccountTab() {
 
   return (
       <AccountTab onPress={() => {navigation.navigate('ChildMain')}}>
-        <Text>Hi</Text>
       </AccountTab>
   )
 }

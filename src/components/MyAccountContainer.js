@@ -1,8 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 
-const MyAccountContainerBox = styled.View`
+const MyAccountContainerBox = styled.TouchableOpacity`
   background-color: white;
   margin-top: 40%;
   width: 80%;
@@ -13,8 +14,10 @@ const MyAccountContainerBox = styled.View`
 `;
 
 export default function MyAccountContainer() {
+  const navigation = useNavigation()
+
   return (
-    <MyAccountContainerBox>
+    <MyAccountContainerBox onPress={() => navigation.navigate('MyAccountDetails')}>
 
     </MyAccountContainerBox>
   )

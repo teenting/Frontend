@@ -11,6 +11,7 @@ import Mission from './src/routes/Mission';
 import Analysis from './src/routes/Analysis';
 import Transfer from './src/routes/Transfer';
 import Login from './src/routes/Login';
+import MyAccountDetails from './src/routes/MyAccountDetails';
 
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ export default function App() {
           <Stack.Screen name="Settings" component={Settings} />
           <Stack.Screen name="Notification" component={Notification} />
           <Stack.Screen name="Transfer" component={Transfer} />
+          <Stack.Screen name="MyAccountDetails" component={MyAccountDetails} />
         </Stack.Group>
         ) : (
           <Stack.Group
