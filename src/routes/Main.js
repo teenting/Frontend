@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 import MyAccountContainer from '../components/MyAccountContainer';
+import ChildrenAccountTab from '../components/ChildrenAccountTab';
 
 const background = require('../styles/images/background.png');
 const logo = require('../styles/images/logo/logo_green_circle.png');
@@ -17,7 +18,7 @@ const Screen = styled.View`
 const BackgroundImage = styled.Image`
   width: 150%;
   height: 80%;
-  margin-top: -250px;
+  margin-top: -280px;
 `;
 
 // 로고, 알림, 설정 있는 구역
@@ -76,6 +77,24 @@ const ButtonBackground = styled.View`
   border-radius: 5px;
 `;
 
+// 자녀 관리
+const ChildrenAccountContainer = styled.View`
+  /* background-color: blue; */
+  width: 100%;
+  height: 32%;
+  position: absolute;
+  margin-top: 100%;
+  padding: 15px 25px;
+`;
+
+const ChildrenAccoutTitle = styled.Text`
+  color: #00ac84;
+  font-size: 20px;
+  margin-top: 3px;
+  margin-bottom: 15px;
+`;
+
+
 export default function Main() {
   return (
     <Screen>
@@ -93,6 +112,13 @@ export default function Main() {
           </HeaderButtonsContainer>
         </Header>
         <MyAccountContainer />
+        
+        <ChildrenAccountContainer>
+          <ChildrenAccoutTitle>자녀 관리</ChildrenAccoutTitle>
+          <ChildrenAccountTab>
+
+          </ChildrenAccountTab>
+        </ChildrenAccountContainer>
     </Screen>
   )
 }

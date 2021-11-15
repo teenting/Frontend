@@ -1,0 +1,6 @@
+main-green : #00ac84
+light-green : #00be92
+
+main-red : #f05c5c
+
+main-black : #000000
