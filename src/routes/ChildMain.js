@@ -1,10 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ChildMain() {
+  const navigation = useNavigation();
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>This is childmain page</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Mission')}>
+        <Text>This is childmain page</Text>
+      </TouchableOpacity>
     </View>
   )
 }

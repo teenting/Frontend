@@ -16,54 +16,47 @@ import Login from './src/routes/Login';
 const Stack = createNativeStackNavigator();
 const ChildStack = createNativeStackNavigator();
 
-
-const ChildStackScreen = () => {
-  return (
-    <ChildStack.Navigator
-        screenOptions={{
-          headerShown: false,
-          // cardStyle: { backgroundColor: 'white' }
-        }}
-    >
-      <ChildStack.Screen name="ChildMain" component={ChildMain} />
-      <ChildStack.Screen name="Mission" component={Mission} />
-      <ChildStack.Screen name="Analysis" component={Analysis} />
-      <ChildStack.Screen name="Transfer" component={Transfer} />
-    </ChildStack.Navigator>
-  )
-}
-
-
 export default function App() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
 
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
-      {login ? (
-        <Stack.Navigator
-        initialRouteName="Main"
-        screenOptions={{
-          headerShown: false,
-          // cardStyle: { backgroundColor: 'white' }
-        }}
-      >
-        <Stack.Screen name="Main" component={Main} />
-        <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="Notification" component={Notification} />
-        <Stack.Screen name="Transfer" component={Transfer} />
-        <Stack.Screen name="ChildScreen" component={ChildStackScreen} />
-      </Stack.Navigator>
-      ) : (
-        <Stack.Navigator
+      <Stack.Navigator>
+        {login ? (
+          <Stack.Group
+          initialRouteName="Main"
           screenOptions={{
             headerShown: false,
             // cardStyle: { backgroundColor: 'white' }
           }}
         >
-          <Stack.Screen name="Login" component={Login} />
-        </Stack.Navigator>
-      )}
+          <Stack.Screen name="Main" component={Main} />
+          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen name="Notification" component={Notification} />
+          <Stack.Screen name="Transfer" component={Transfer} />
+        </Stack.Group>
+        ) : (
+          <Stack.Group
+            screenOptions={{
+              headerShown: false,
+              // cardStyle: { backgroundColor: 'white' }
+            }}
+          >
+            <Stack.Screen name="Login" component={Login} />
+          </Stack.Group>
+        )}
+        <Stack.Group
+          screenOptions={{
+            headerShown: false,
+            // cardStyle: { backgroundColor: 'white' }
+          }}
+        >
+          <ChildStack.Screen name="ChildMain" component={ChildMain} />
+          <ChildStack.Screen name="Mission" component={Mission} />
+          <ChildStack.Screen name="Analysis" component={Analysis} />
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 import MyAccountContainer from '../components/MyAccountContainer';
 import ChildrenAccountTab from '../components/ChildrenAccountTab';
 
@@ -77,7 +78,11 @@ const ButtonBackground = styled.View`
   border-radius: 5px;
 `;
 
-// 자녀 관리
+const NoticeButton = styled(ButtonBackground)``;
+
+const SettingsButton = styled(ButtonBackground)``;
+
+// 자녀 관리 + AccountContainer
 const ChildrenAccountContainer = styled.View`
   /* background-color: blue; */
   width: 100%;
@@ -85,6 +90,16 @@ const ChildrenAccountContainer = styled.View`
   position: absolute;
   margin-top: 100%;
   padding: 15px 25px;
+`;
+
+// 자녀 전체의 계좌 Tab을 담고 있는 컨테이너
+const AccountContainer = styled.View`
+  /* background-color: blueviolet; */
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const ChildrenAccoutTitle = styled.Text`
@@ -96,6 +111,7 @@ const ChildrenAccoutTitle = styled.Text`
 
 
 export default function Main() {
+  const navigation = useNavigation();
   return (
     <Screen>
         <BackgroundImage source={background} />
@@ -106,8 +122,12 @@ export default function Main() {
 
           <HeaderButtonsContainer>
             <ButtonsContainer>
-              <ButtonBackground />
-              <ButtonBackground />
+              <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+                <NoticeButton />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+                <SettingsButton />
+              </TouchableOpacity>
             </ButtonsContainer>
           </HeaderButtonsContainer>
         </Header>
@@ -115,9 +135,10 @@ export default function Main() {
         
         <ChildrenAccountContainer>
           <ChildrenAccoutTitle>자녀 관리</ChildrenAccoutTitle>
-          <ChildrenAccountTab>
-
-          </ChildrenAccountTab>
+          <AccountContainer>
+            <ChildrenAccountTab />
+            <ChildrenAccountTab />
+          </AccountContainer>
         </ChildrenAccountContainer>
     </Screen>
   )

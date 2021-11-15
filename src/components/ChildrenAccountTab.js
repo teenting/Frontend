@@ -1,19 +1,10 @@
 // 메인화면에서 자녀 계좌 보여줄 수 있는 탭
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View } from 'react-native';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 
-// 자녀 전체의 계좌 Tab을 담고 있는 컨테이너
-const AccountContainer = styled.View`
-  /* background-color: blueviolet; */
-  width: 100%;
-  height: 80%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const AccountTab = styled.View`
+const AccountTab = styled.TouchableOpacity`
   border-radius: 10px;
   background-color: white;
   width: 48%;
@@ -22,14 +13,11 @@ const AccountTab = styled.View`
 `;
 
 export default function ChildrenAccountTab() {
+  const navigation = useNavigation()
+
   return (
-    <AccountContainer>
-      <AccountTab>
-        {/* text here */}
+      <AccountTab onPress={() => {navigation.navigate('ChildMain')}}>
+        <Text>Hi</Text>
       </AccountTab>
-      <AccountTab>
-        {/* text here */}
-      </AccountTab>
-    </AccountContainer>
   )
 }
