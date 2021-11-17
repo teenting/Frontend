@@ -12,11 +12,78 @@ const AccountTab = styled.TouchableOpacity`
   box-shadow: 0px 7px 8px rgba(100, 100, 111, 0.2) ;
 `;
 
+// 자녀 이름 컨테이너
+const ChildrenNameContainer = styled.View`
+  /* background-color: blueviolet; */
+  width: 100%;
+  height: 20%;
+  justify-content: center;
+  padding: 0px 13px;
+`;
+
+const ChildrenName = styled.Text`
+  color: #00ac84;
+  font-size: 14px;
+`;
+
+
+// 화폐 단위 컨테이너
+const MoneyUnitContainer = styled.View`
+  /* background-color: chartreuse; */
+  width: 100%;
+  height: 20%;
+`;
+
+
+// 자녀 잔액 컨테이너
+const ChildrenMoneyContainer = styled.View`
+  /* background-color: coral; */
+  width: 100%;
+  height: 25%;
+  padding: 0px 13px;
+`;
+
+const ChildrenMoney = styled.Text`
+  color: #6E6E6E;
+  font-size: 28px;
+`;
+
+
+// 송금하기 버튼 컨테이너
+const TransferTabContainer = styled.View`
+  /* background-color: cornsilk; */
+  width: 100%;
+  height: 35%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TransferTab = styled.TouchableOpacity`
+  background-color: #00ac84;
+  width: 85%;
+  height: 50%;
+  border-radius: 10px;
+`;
+
 export default function ChildrenAccountTab() {
   const navigation = useNavigation()
 
   return (
       <AccountTab onPress={() => {navigation.navigate('ChildMain')}}>
+        <ChildrenNameContainer>
+          <ChildrenName>민수</ChildrenName>
+        </ChildrenNameContainer>
+        <MoneyUnitContainer></MoneyUnitContainer>
+        <ChildrenMoneyContainer>
+          <ChildrenMoney>
+            65,000
+          </ChildrenMoney>
+        </ChildrenMoneyContainer>
+        <TransferTabContainer>
+          <TransferTab onPress={() => navigation.navigate('Transfer')}>
+
+          </TransferTab>
+        </TransferTabContainer>
       </AccountTab>
   )
 }
