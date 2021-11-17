@@ -18,7 +18,7 @@ const Stack = createNativeStackNavigator();
 const ChildStack = createNativeStackNavigator();
 
 export default function App() {
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
 
   return (
     <NavigationContainer>
