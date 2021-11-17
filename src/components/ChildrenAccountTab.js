@@ -17,6 +17,13 @@ const ChildrenNameContainer = styled.View`
   /* background-color: blueviolet; */
   width: 100%;
   height: 20%;
+  justify-content: center;
+  padding: 0px 13px;
+`;
+
+const ChildrenName = styled.Text`
+  color: #00ac84;
+  font-size: 14px;
 `;
 
 
@@ -24,7 +31,7 @@ const ChildrenNameContainer = styled.View`
 const MoneyUnitContainer = styled.View`
   /* background-color: chartreuse; */
   width: 100%;
-  height: 25%;
+  height: 20%;
 `;
 
 
@@ -32,7 +39,13 @@ const MoneyUnitContainer = styled.View`
 const ChildrenMoneyContainer = styled.View`
   /* background-color: coral; */
   width: 100%;
-  height: 27%;
+  height: 25%;
+  padding: 0px 13px;
+`;
+
+const ChildrenMoney = styled.Text`
+  color: #6E6E6E;
+  font-size: 28px;
 `;
 
 
@@ -40,7 +53,7 @@ const ChildrenMoneyContainer = styled.View`
 const TransferTabContainer = styled.View`
   /* background-color: cornsilk; */
   width: 100%;
-  height: 28%;
+  height: 35%;
   justify-content: center;
   align-items: center;
 `;
@@ -48,7 +61,7 @@ const TransferTabContainer = styled.View`
 const TransferTab = styled.TouchableOpacity`
   background-color: #00ac84;
   width: 85%;
-  height: 65%;
+  height: 50%;
   border-radius: 10px;
 `;
 
@@ -57,9 +70,15 @@ export default function ChildrenAccountTab() {
 
   return (
       <AccountTab onPress={() => {navigation.navigate('ChildMain')}}>
-        <ChildrenNameContainer></ChildrenNameContainer>
+        <ChildrenNameContainer>
+          <ChildrenName>민수</ChildrenName>
+        </ChildrenNameContainer>
         <MoneyUnitContainer></MoneyUnitContainer>
-        <ChildrenMoneyContainer></ChildrenMoneyContainer>
+        <ChildrenMoneyContainer>
+          <ChildrenMoney>
+            65,000
+          </ChildrenMoney>
+        </ChildrenMoneyContainer>
         <TransferTabContainer>
           <TransferTab onPress={() => navigation.navigate('Transfer')}>
 

@@ -96,7 +96,7 @@ const ChildrenAccountContainer = styled.View`
 const AccountContainer = styled.View`
   /* background-color: blueviolet; */
   width: 100%;
-  height: 80%;
+  height: 70%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
