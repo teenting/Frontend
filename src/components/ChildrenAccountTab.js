@@ -4,6 +4,8 @@ import { StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View } from '
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 
+const rightArrow = require('../styles/images/icon/rightArrow.png');
+
 const AccountTab = styled.TouchableOpacity`
   border-radius: 10px;
   background-color: white;
@@ -63,13 +65,35 @@ const TransferTab = styled.TouchableOpacity`
   width: 85%;
   height: 50%;
   border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const InnerTransferTabContainer = styled.View`
+  /* background-color: lightskyblue; */
+  width: 40%;
+  height: 70%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const TransferTabText = styled.Text`
+  color: white;
+  font-size: 12px;
+`;
+
+const TransferTabImage = styled.Image`
+  width: 10px;
+  height: 10px;
 `;
 
 export default function ChildrenAccountTab() {
   const navigation = useNavigation()
 
   return (
-      <AccountTab onPress={() => {navigation.navigate('ChildMain')}}>
+      <AccountTab onPress={() => {navigation.push('ChildMain')}}>
         <ChildrenNameContainer>
           <ChildrenName>민수</ChildrenName>
         </ChildrenNameContainer>
@@ -80,8 +104,11 @@ export default function ChildrenAccountTab() {
           </ChildrenMoney>
         </ChildrenMoneyContainer>
         <TransferTabContainer>
-          <TransferTab onPress={() => navigation.navigate('Transfer')}>
-
+          <TransferTab onPress={() => navigation.push('Transfer')}>
+            <InnerTransferTabContainer>
+              <TransferTabText>송금하기</TransferTabText>
+              <TransferTabImage source={rightArrow}/>
+            </InnerTransferTabContainer>
           </TransferTab>
         </TransferTabContainer>
       </AccountTab>
