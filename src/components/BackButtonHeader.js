@@ -3,6 +3,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
+
+const greenBackButtonImage = require('../styles/images/icon/greenBackButton.png');
 
 const HeaderContainer = styled.View`
 /* background-color: crimson; */
@@ -31,14 +34,25 @@ const BackButton = styled.TouchableOpacity`
   border-radius: 10px;
   bottom: 10px;
   left: 20px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BackButtonImage = styled.Image`
+  width: 12px;
+  height: 20px;
 `;
 
 
 export default function BackButtonHeader() {
+  const navigation = useNavigation();
+
   return (
     <HeaderContainer>
       <BackButtonContainer>
-        <BackButton></BackButton>
+        <BackButton onPress={() => navigation.goBack()}>
+          <BackButtonImage source={greenBackButtonImage} />
+        </BackButton>
       </BackButtonContainer>
     </HeaderContainer>
   )

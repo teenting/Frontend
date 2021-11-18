@@ -7,6 +7,8 @@ import ChildrenAccountTab from '../components/ChildrenAccountTab';
 
 const background = require('../styles/images/background.png');
 const logo = require('../styles/images/logo/logo_green_circle.png');
+const bellImage = require('../styles/images/icon/bell.png');
+const settingsImage = require('../styles/images/icon/settings.png');
 
 // 전체 화면
 const Screen = styled.View`
@@ -76,11 +78,23 @@ const ButtonBackground = styled.View`
   background-color: white;
   opacity: 0.64;
   border-radius: 5px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const NoticeButton = styled(ButtonBackground)``;
 
+const NoticeButtonImage = styled.Image`
+  width: 15px;
+  height: 17px;
+`;
+
 const SettingsButton = styled(ButtonBackground)``;
+
+const SettingsButtonImage = styled.Image`
+  width: 17px;
+  height: 17px;
+`;
 
 // 자녀 관리 + AccountContainer
 const ChildrenAccountContainer = styled.View`
@@ -122,11 +136,15 @@ export default function Main() {
 
           <HeaderButtonsContainer>
             <ButtonsContainer>
-              <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
-                <NoticeButton />
+              <TouchableOpacity onPress={() => navigation.push('Notification')}>
+                <NoticeButton>
+                  <NoticeButtonImage source={bellImage} />
+                </NoticeButton>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-                <SettingsButton />
+              <TouchableOpacity onPress={() => navigation.push('Settings')}>
+                <SettingsButton>
+                  <SettingsButtonImage source={settingsImage} />
+                </SettingsButton>
               </TouchableOpacity>
             </ButtonsContainer>
           </HeaderButtonsContainer>
