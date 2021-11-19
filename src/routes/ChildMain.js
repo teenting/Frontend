@@ -1,8 +1,8 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
+import NavigationBar from '../components/NavigationBar';
 
 const refresh = require('../styles/images/icon/refresh.png')
 
@@ -38,7 +38,7 @@ const AccountContainer = styled.View`
   width: 100%;
   height: 36%;
   position: absolute;
-  margin: 100px;
+  margin: 80px;
   justify-content: center;
   align-items: center;
 `;
@@ -113,7 +113,7 @@ const ButtonsImageContainer = styled.View`
   width: 80%;
   height: 10%;
   position: absolute;
-  margin: 330px;
+  margin: 320px;
   display: flex;
   justify-content: center;
 `;
@@ -207,10 +207,6 @@ const UsageInfo = styled.View`
   justify-content: center;
 `;
 
-const UsageInfoPhotoBox = styled.View`
-  text-align: center;
-`;
-
 const UsageInfoPhoto = styled.View`
   background-color: #D5D5D5;
   width: 30px;
@@ -248,8 +244,6 @@ const UsageInfoPay = styled.Text`
 `;
 
 export default function ChildMain() {
-  const navigation = useNavigation();
-
   return (
     <Screen>
       <Header>
@@ -296,8 +290,7 @@ export default function ChildMain() {
           </Usage>
         </UsageBox>
       </UsageContationer>
-        <TouchableOpacity onPress={() => navigation.navigate('Mission')}>
-        </TouchableOpacity>
+      <NavigationBar/>
     </Screen>
   )
 }
