@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, Modal, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
-import TouchableScale from 'react-native-touchable-scale';
+//import TouchableScale from 'react-native-touchable-scale';
 
 const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '0', '2' ]
 const PasswordBubbleList = ['*', '*', '*', '*', '*', '*']
