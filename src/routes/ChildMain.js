@@ -3,6 +3,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
 import NavigationBar from '../components/NavigationBar';
+import MyAccountContainer from '../components/MyAccountContainer';
+import UsageBox from '../components/UsageBox';
 
 const refresh = require('../styles/images/icon/refresh.png')
 
@@ -10,216 +12,138 @@ const refresh = require('../styles/images/icon/refresh.png')
 const Screen = styled.View`
   width: 100%;
   height: 100%;
+  display: flex;
   align-items: center;
-  position: relative;
 `;
 
 // 헤더
 const Header = styled.View`
-  /* background-color: yellow; */
-  width: 100%;
-  height: 11.8%;
-  position: absolute;
 `;
 
-const ChildPhotoContainer = styled.View`
-  background-color: #00ac84;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  border-radius: 40px;
-  right: 20px;
-  bottom: 0;
-  `;
+// const ChildPhotoContainer = styled.View`
+//   background-color: #00ac84;
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 40px;
+//   bottom: 0;
+//   `;
 
-// 계좌
-const AccountContainer = styled.View`
-  /* background-color: green; */
-  width: 100%;
-  height: 36%;
-  position: absolute;
-  margin: 80px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Account = styled.View`
-  background-color:  #ffffff;
-  width: 80%;
-  height: 60%;
-  border-radius: 10;
-  position: absolute;
-`;
-
-const AccountHeader = styled.View`
-  /* background-color: blue; */
+const OuterAccountContainer = styled.View`
+  /* background-color: salmon; */
   width: 100%;
   height: 35%;
-  position: absolute;
-  justify-content: center;
-  padding: 10px 15px;
-`;
-
-const AccountTitle = styled.Text`    
-  color: #BAB9B9;
-  font-size: 17px;
-  font-weight: bold;
-`;
-
-const RefreshImage = styled.Image`
-  width: 24px;
-  height: 20px;
-  position: absolute;
-  right: 20px;
-`;
-
-const MoneyContainer = styled.View`
-  /* background-color: black; */
-  width: 100%;
-  height: 55%;
-  margin-top: 35px;
-  justify-content: center;
-  padding: 25px;
-`;
-
-const MoneyTitle = styled.Text`
-  color: #6E6E6E;
-  font-size: 50px;
-`;
-
-const BankContainer = styled.View`
-  /* background-color: red; */
-  width: 100%;
-  height: 25%;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  padding: 0px 15px;
-`;
-
-const BankName = styled.Text`
-  font-size: 15px;
-  margin-right: 5px;
-  color: #BAB9B9;
-`
-const AccountNumber = styled.Text`
-  font-size: 15px;
-  color: #6E6E6E;
 `;
 
 // 송금하기, 한도 설정 버튼
-const ButtonsImageContainer = styled.View`
-  /* background-color:  black; */
-  width: 80%;
-  height: 10%;
-  position: absolute;
-  margin: 320px;
-  display: flex;
-  justify-content: center;
-`;
-
-const TransferButton = styled.View`
-  background-color: #00be92;
-  width: 35%;
-  height: 40%;
-  position: absolute;
-  left: 30px;
-  display: flex;
-  border-radius: 10;
-  margin: auto;
-`;
-
-const TransferButtonTitle = styled.Text`
+const ButtonsContainer = styled.View`
+  /* background-color: royalblue; */
   width: 100%;
-  height: 50%;
-  color: #ffffff;
-  position: absolute;
-  text-align: center;
-  margin-top: 10px;
-`;
-
-const LimitButton = styled.View`
-  background-color: #00be92;
-  width: 35%;
-  height: 40%;
-  position: absolute;
-  right: 30px;
-  display: flex;
-  border-radius: 10;
-  margin: auto;
-`;
-
-const LimitButtonTitle = styled.Text`
-  /* background-color: black; */
-  width: 100%;
-  height: 50%;
-  color: #ffffff;
-  position: absolute;
-  text-align: center;
-  margin-top: 10px;
-`;
-
-// 사용 내역
-const UsageContationer = styled.View`
-  /* background-color: blue; */
-  width: 100%;
-  height: 53%;
+  height: 30%;
   position: absolute;
   bottom: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 
-const UsageTitle = styled.Text`
+// 버튼 공통양식
+const Button = styled.View`
+  width: 35%;
+  height: 40%;
+  border-radius: 10px;
+  justify-content: center;
+  margin: 0px 5px;
+`;
+
+const TransferButton = styled(Button)`
+  background-color: #00ac84;
+`;
+
+const LimitButton = styled(Button)`
+  background-color: #00be92;
+`;
+
+// 버튼 글씨 공통 양식
+const ButtonTitle = styled.Text`
+  text-align: center;
+  width: 100%;
+  height: 50%;
+  color: #ffffff;
+`;
+
+// 사용 내역 컨테이너
+const UsageContationer = styled.View`
+  /* background-color: blue; */
+  width: 100%;
+  height: 55%;
+  display: flex;
+`;
+
+const UsageTitleContainer = styled.View`
   /* background-color: yellow; */
   width: 100%;
   height: 10%;
-  color: #6E6E6E;
-  font-size: 20px;
-  font-weight: bold;
-  position: absolute;
-  padding: 15px;
+  justify-content: center;
+  padding: 0px 20px;
 `;
 
-const UsageBox = styled.View`
+// 사용 내역
+const UsageTitle = styled.Text`
+  color: #6E6E6E;
+  font-size: 20px;
+`;
+
+// 사용 내역 목록 컨테이너
+const UsageListContainer = styled.View`
   /* background-color: black; */
   width: 100%;
   height: 95%;
-  margin-top: 40px;
   align-items: center;
+  justify-content: center;
+  padding: 5px 0px;
 `;
 
-
-const Usage = styled.View`
+// 사용 내역 목록
+const UsageList = styled.View`
   background-color: white;
-  margin-top: 10px;
   width: 90%;
   height: 100%;
-  border-radius: 20;
-  padding: 30px 20px 2px 20px;
+  border-radius: 20px;
+  padding-top: 10px;
 `;
 
+// Each 사용 내역
 const UsageInfo = styled.View`
   /* background-color: blue; */
   width: 100%;
   height: 15%;
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  position: relative;
 `;
 
+// 회색 동그라미 컨테이너
+const UsageInfoPhotoContainer = styled.View`
+  flex: 2;
+  justify-content: center;
+  align-items: center;
+`;
+
+// 회색 동그라미
 const UsageInfoPhoto = styled.View`
   background-color: #D5D5D5;
   width: 30px;
   height: 30px;
-  position: absolute;
   border-radius: 30px;
 `;
 
+// 사용 내역 정보
 const UsageInfoContainer = styled.View`
   /* background-color: red; */
-  text-align: center;
-  position: absolute;
-  left: 50px;
+  flex: 7;
+  justify-content: center;
 `;
 
 const UsageInfoText = styled.Text`
@@ -232,10 +156,11 @@ const UsageInfoBank = styled.Text`
   color: #505050;
 `;
 
+// 돈 정보 컨테이너
 const UsageInfoPayContainter = styled.View`
   /* background-color: green; */
-  text-align: center;
-  margin-left: auto;
+  flex: 2.5;
+  justify-content: center;
 `;
 
 const UsageInfoPay = styled.Text`
@@ -246,51 +171,31 @@ const UsageInfoPay = styled.Text`
 export default function ChildMain() {
   return (
     <Screen>
-      <Header>
-        <ChildPhotoContainer />
-      </Header>
+        {/* <ChildPhotoContainer /> */}
       <BackButtonHeader />
-      <AccountContainer>
-        <Account>
-          <AccountHeader>
-            <AccountTitle>민수 계좌</AccountTitle>
-            <RefreshImage source={refresh}/>
-          </AccountHeader>
-          <MoneyContainer>
-            <MoneyTitle>65,000</MoneyTitle>
-          </MoneyContainer>
-          <BankContainer>
-            <BankName>농협</BankName>
-            <AccountNumber>325935830493</AccountNumber>
-          </BankContainer>
-        </Account>
-      </AccountContainer>
-      <ButtonsImageContainer>
-        <TransferButton>
-          <TransferButtonTitle>송금 하기</TransferButtonTitle>
-        </TransferButton>
-        <LimitButton>
-          <LimitButtonTitle>한도 설정</LimitButtonTitle>
-        </LimitButton>
-      </ButtonsImageContainer>
+      <OuterAccountContainer>
+        <ButtonsContainer>
+          <TransferButton>
+            <ButtonTitle>송금 하기</ButtonTitle>
+          </TransferButton>
+          <LimitButton>
+            <ButtonTitle>한도 설정</ButtonTitle>
+          </LimitButton>
+        </ButtonsContainer>
+      </OuterAccountContainer>
+      <MyAccountContainer marginTop='33%'/>
+      
       <UsageContationer>
-        <UsageTitle>사용 내역</UsageTitle>
-        <UsageBox>
-          <Usage>
-            <UsageInfo>
-              <UsageInfoPhoto/>
-              <UsageInfoContainer>
-                <UsageInfoText>김이나</UsageInfoText>
-                <UsageInfoBank>농협은행</UsageInfoBank>
-              </UsageInfoContainer>
-              <UsageInfoPayContainter>
-                <UsageInfoPay>+3000원</UsageInfoPay>
-              </UsageInfoPayContainter>
-            </UsageInfo>
-          </Usage>
-        </UsageBox>
+        <UsageTitleContainer>
+          <UsageTitle>사용 내역</UsageTitle>
+        </UsageTitleContainer>
+
+        <UsageListContainer>
+          <UsageList>
+            <UsageBox />
+          </UsageList>
+        </UsageListContainer>
       </UsageContationer>
-      <NavigationBar/>
     </Screen>
   )
 }

@@ -2,10 +2,11 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
+import { useRoute } from '@react-navigation/native';
 
 const MyAccountContainerBox = styled.TouchableOpacity`
   background-color: white;
-  margin-top: 40%;
+  margin-top: ${(props) => props.marginTop ? props.marginTop : '40%'};
   width: 80%;
   height: 18%;
   position: absolute;
@@ -63,11 +64,12 @@ const AccountNumber = styled.Text`
   font-size: 14px;
 `;
 
-export default function MyAccountContainer() {
-  const navigation = useNavigation()
+export default function MyAccountContainer({ children, ...rest }) {
+  const navigation = useNavigation();
+  const route = useRoute();
 
   return (
-    <MyAccountContainerBox onPress={() => navigation.navigate('MyAccountDetails')}>
+    <MyAccountContainerBox {...rest} onPress={() => route.name == 'Main' ? navigation.navigate('MyAccountDetails') : null}>
       <MyAccountHeaderContainer>
         <MyAccountTitle>내 계좌</MyAccountTitle>
       </MyAccountHeaderContainer>
