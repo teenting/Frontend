@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
+import { useNavigation } from '@react-navigation/native';
 
 const AccountSettingsList = ['인증 및 보안', '결제', '송금', '자동이체']
 const AppSettingsList = ['앱 버전', '약관 및 개인정보 처리 내역', '탈퇴하기']
@@ -57,11 +58,14 @@ const TabArrow = styled.Image`
 
 
 export default function Notification() {
+  
+  const navigation = useNavigation();
+  
   return (
     <Screen>
       <BackButtonHeader />
       <MySettingsContainer>
-        <TabContainer>
+        <TabContainer onPress={() => navigation.push('TransferSuccess')}>
           <TabText>내 정보</TabText>
           <TabArrow source={more} />
         </TabContainer>
