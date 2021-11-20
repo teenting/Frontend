@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 import { useRoute } from '@react-navigation/native';
 
+const refresh = require('../styles/images/icon/refresh.png');
+
 const MyAccountContainerBox = styled.TouchableOpacity`
   background-color: white;
   margin-top: ${(props) => props.marginTop ? props.marginTop : '40%'};
@@ -22,12 +24,26 @@ const MyAccountHeaderContainer = styled.View`
   width: 100%;
   height: 35%;
   justify-content: center;
-  padding: 0px 15px;
+  align-items: center;
+  padding: 0px 20px;
+  display: flex;
+  flex-direction: row;
 `;
 
 const MyAccountTitle = styled.Text`
+  /* background-color: sienna; */
+  flex: 9;
   color: #BAB9B9;
   font-size: 15px;
+`;
+
+const RefreshImageContainer = styled.TouchableOpacity`
+  flex: 1
+`;
+
+const RefreshImage = styled.Image`
+  width: 24px;
+  height: 20px;
 `;
 
 const MyMoneyContainer = styled.View`
@@ -43,6 +59,7 @@ const MyMoney = styled.Text`
   font-size: 40px;
 `;
 
+// 은행 이름 + 계좌번호
 const MyAccountInfoContainer = styled.View`
   /* background-color: bisque; */
   width: 100%;
@@ -50,7 +67,7 @@ const MyAccountInfoContainer = styled.View`
   align-items: center;
   display: flex;
   flex-direction: row;
-  padding: 0px 15px;
+  padding: 0px 20px;
 `;
 
 const BankName = styled.Text`
@@ -72,6 +89,9 @@ export default function MyAccountContainer({ children, ...rest }) {
     <MyAccountContainerBox {...rest} onPress={() => route.name == 'Main' ? navigation.navigate('MyAccountDetails') : null}>
       <MyAccountHeaderContainer>
         <MyAccountTitle>내 계좌</MyAccountTitle>
+        <RefreshImageContainer>
+          <RefreshImage source={refresh} />
+        </RefreshImageContainer>
       </MyAccountHeaderContainer>
       <MyMoneyContainer>
         <MyMoney>130,000</MyMoney>

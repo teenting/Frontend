@@ -10,9 +10,10 @@ const unitWon = require('../styles/images/icon/unitWon.png');
 const AccountTab = styled.TouchableOpacity`
   border-radius: 10px;
   background-color: white;
-  width: 48%;
-  height: 100%;
-  box-shadow: 0px 7px 8px rgba(100, 100, 111, 0.2) ;
+  width: 140px;
+  height: 160px;
+  box-shadow: 0px 7px 8px rgba(100, 100, 111, 0.2);
+  margin: 0px 6px;
 `;
 
 // 자녀 이름 컨테이너

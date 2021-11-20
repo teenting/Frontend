@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
-import NavigationBar from '../components/NavigationBar';
 import MyAccountContainer from '../components/MyAccountContainer';
 import UsageBox from '../components/UsageBox';
 import { useNavigation } from '@react-navigation/native';
