@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
+import CategoryContainer from '../components/CategoryContainer';
 
 const DateList = ['1년', '6개월', '1개월', '1주']
 
@@ -57,6 +58,7 @@ const WholeUsageViewContainer = styled.View`
   height: 43%;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const UsageCircle = styled.Image`
@@ -64,16 +66,39 @@ const UsageCircle = styled.Image`
   height: 270px;
 `;
 
+const WholeUsageInnerContainer = styled.View`
+  /* background-color: rebeccapurple; */
+  width: 40%;
+  height: 22%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+const WholeUsageInnerText = styled.Text`
+  /* background-color: rosybrown; */
+  width: ${(props) => props.width ? props.width : '100%'};
+  font-size: 25px;
+  text-align: center;
+`;
+
+const WholeUsageInnerMoney = styled.Text`
+  font-size: 35px;
+`;
+
 // '카테고리별' 제목과 카테고리 리스트가 있는 컨테이너
 const OuterCategoryContainer = styled.View`
-  background-color: wheat;
+  /* background-color: wheat; */
   width: 100%;
   height: 32%;
   display: flex;
 `;
 
 const CategoryTitleContainer = styled.View`
-  background-color: violet;
+  /* background-color: violet; */
   width: 100%;
   height: 10%;
   justify-content: center;
@@ -84,14 +109,6 @@ const CategoryTitle = styled.Text`
   font-size: 17px;
   font-weight: bold;
 `;
-
-// 카테고리 리스트가 있는 컨테이너
-const CategoryListContainer = styled.View`
-  background-color: palegreen;
-  width: 100%;
-  height: 90%;
-`;
-
 
 export default function Analysis() {
   return (
@@ -109,14 +126,17 @@ export default function Analysis() {
       </DateContainer>
       <WholeUsageViewContainer>
         <UsageCircle source={greencircle} />
+        <WholeUsageInnerContainer>
+          <WholeUsageInnerText>총 지출</WholeUsageInnerText>
+          <WholeUsageInnerMoney>12,300</WholeUsageInnerMoney>
+          <WholeUsageInnerText width={30}>원</WholeUsageInnerText>
+        </WholeUsageInnerContainer>
       </WholeUsageViewContainer>
       <OuterCategoryContainer>
         <CategoryTitleContainer>
           <CategoryTitle>카테고리별</CategoryTitle>
         </CategoryTitleContainer>
-        <CategoryListContainer>
-
-        </CategoryListContainer>
+        <CategoryContainer />
       </OuterCategoryContainer>
     </Screen>
   )

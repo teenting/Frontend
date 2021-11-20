@@ -9,8 +9,7 @@ const Screen = styled.View`
   display: flex;
 `;
 
-
-export default function Analysis() {
+export default function Mission() {
   return (
     <Screen>
       <BackButtonHeader />

@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 
 const rightArrow = require('../styles/images/icon/rightArrow.png');
+const unitWon = require('../styles/images/icon/unitWon.png');
 
 const AccountTab = styled.TouchableOpacity`
   border-radius: 10px;
@@ -18,7 +19,7 @@ const AccountTab = styled.TouchableOpacity`
 const ChildrenNameContainer = styled.View`
   /* background-color: blueviolet; */
   width: 100%;
-  height: 20%;
+  height: 23%;
   justify-content: center;
   padding: 0px 13px;
 `;
@@ -33,7 +34,13 @@ const ChildrenName = styled.Text`
 const MoneyUnitContainer = styled.View`
   /* background-color: chartreuse; */
   width: 100%;
-  height: 20%;
+  height: 22%;
+  padding: 0px 13px;
+`;
+
+const MoneyUnitImage = styled.Image`
+  width: 30px;
+  height: 30px;
 `;
 
 
@@ -41,8 +48,9 @@ const MoneyUnitContainer = styled.View`
 const ChildrenMoneyContainer = styled.View`
   /* background-color: coral; */
   width: 100%;
-  height: 25%;
+  height: 24%;
   padding: 0px 13px;
+  justify-content: center;
 `;
 
 const ChildrenMoney = styled.Text`
@@ -55,7 +63,7 @@ const ChildrenMoney = styled.Text`
 const TransferTabContainer = styled.View`
   /* background-color: cornsilk; */
   width: 100%;
-  height: 35%;
+  height: 33%;
   justify-content: center;
   align-items: center;
 `;
@@ -97,7 +105,9 @@ export default function ChildrenAccountTab() {
         <ChildrenNameContainer>
           <ChildrenName>민수</ChildrenName>
         </ChildrenNameContainer>
-        <MoneyUnitContainer></MoneyUnitContainer>
+        <MoneyUnitContainer>
+          <MoneyUnitImage source={unitWon} />
+        </MoneyUnitContainer>
         <ChildrenMoneyContainer>
           <ChildrenMoney>
             65,000
