@@ -4,11 +4,38 @@ import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
 //import TouchableScale from 'react-native-touchable-scale';
 
-const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '0', '2' ]
-const PasswordBubbleList = ['*', '*', '*', '*', '*', '*']
+const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0' ]
+const Password = []
+const PasswordBubbleList = [
+  {
+    id: 1,
+    text: '*'
+  },
+  {
+    id: 2,
+    text: '*'
+  },
+  {
+    id: 3,
+    text: '*'
+  },
+  {
+    id: 4,
+    text: '*'
+  },
+  {
+    id: 5,
+    text: '*'
+  },
+  {
+    id: 6,
+    text: '*'
+  },
+]
 
 const closeButtonImage = require('../styles/images/icon/closeButton.png');
 const rightArrowImage = require('../styles/images/icon/rightArrow.png');
+const backspace = require('../styles/images/icon/backspace.png');
 
 const Screen = styled.View`
   width: 100%;
@@ -65,6 +92,7 @@ const NumberPad = styled.TouchableOpacity`
   width: 30%;
   height: 25%;
   justify-content: center;
+  align-items: center;
 `;
 
 const NumberText = styled.Text`
@@ -72,6 +100,11 @@ const NumberText = styled.Text`
   width: 100%;
   font-size: 28px;
   text-align: center;
+`;
+
+const DeleteImage = styled.Image`
+  width: 30px;
+  height: 20px;
 `;
 
 // 송금하기 버튼있는 구역
@@ -236,16 +269,22 @@ const PasswordCheck = styled.Text`
 
 export default function Transfer() {
   const [num, setNum] = useState('');
+  const [money, setMoney] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const handleNumClick = (number) => {
-    console.log('Hi');
     setNum(num => num + number);
-  }
+  };
 
-  const handleSubmit = () => {
+  const handleTransfer = () => {
+    setMoney(num);
     setModalVisible(true);
-  }
+  };
+
+  const handleBubble = () => {
+
+  };
 
   return (
     <Screen>   
@@ -268,26 +307,29 @@ export default function Transfer() {
             </PasswordInputTitleContainer>
             <PasswordBubbleContainer>
               <PasswordBubble>
-                { PasswordBubbleList.map((bubble) => (
-                  <EachBubble>
-                    <BlindStar>{bubble}</BlindStar>
+                { PasswordBubbleList.map(({id, text}) => (
+                  <EachBubble key={id} onPress={handleBubble()}>
+                    <BlindStar>{text}</BlindStar>
                   </EachBubble>
                 )) }
               </PasswordBubble>
             </PasswordBubbleContainer>
             <TransferedMoneyContainer>
-              <TransferedMoney>1500원을 송금합니다.</TransferedMoney>
+              <TransferedMoney>{money}원을 송금합니다.</TransferedMoney>
             </TransferedMoneyContainer>
           </PasswordInfoContainer>
           
           {/* 모달 비밀번호 키패드 */}
           <KeyPadContainer>
             <KeyPad>
-              { NumberList.map((number) => (
-                <RandomButton>
+            { NumberList.map((number) => (
+                <NumberPad>
                   <NumberText>{number}</NumberText>
-                </RandomButton>
-              ) )}
+                </NumberPad>
+            ) )}
+              <NumberPad>
+                  <DeleteImage source={backspace} />
+              </NumberPad>
             </KeyPad>
             <PasswordCheckContainer>
               <PasswordCheck>비밀번호가 일치해야 합니다.</PasswordCheck>
@@ -309,12 +351,15 @@ export default function Transfer() {
       <NumberPadContainer>
         { NumberList.map((number) => (
           <NumberPad  keyboardType = 'numeric' onPress={() => handleNumClick(number)}>
-            <NumberText>{number}</NumberText>
+              <NumberText>{number}</NumberText>
           </NumberPad>
-        ) )}
+        )) }
+        <NumberPad>
+          <DeleteImage source={backspace} />
+        </NumberPad>
       </NumberPadContainer>
       <SubmitButtonContainer>
-        <TransferButton onPress={() => handleSubmit()}>
+        <TransferButton onPress={() => handleTransfer()}>
           <TransferButtonText>송금하기</TransferButtonText>
           <TransferButtonImage source={rightArrowImage}/>
         </TransferButton>
