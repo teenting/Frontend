@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Main from './src/routes/Main';
 import Notification from './src/routes/Notification';
 import Settings from './src/routes/Settings';
@@ -16,7 +17,21 @@ import TransferSuccess from './src/routes/TransferSuccess';
 
 
 const Stack = createNativeStackNavigator();
-const ChildStack = createNativeStackNavigator();
+const ChildTab = createBottomTabNavigator();
+
+function childrenTabScreen() {
+  return (
+      <ChildTab.Navigator
+        screenOptions={{
+        headerShown: false,
+        // cardStyle: { backgroundColor: 'white' }
+      }}>
+        <ChildTab.Screen name="ChildMain" component={ChildMain} />
+        <ChildTab.Screen name="Mission" component={Mission} />
+        <ChildTab.Screen name="Analysis" component={Analysis} />
+      </ChildTab.Navigator>
+  )
+}
 
 export default function App() {
   const [login, setLogin] = useState(true);
@@ -39,6 +54,7 @@ export default function App() {
           <Stack.Screen name="Transfer" component={Transfer} />
           <Stack.Screen name="MyAccountDetails" component={MyAccountDetails} />
           <Stack.Screen name="TransferSuccess" component={TransferSuccess} />
+          <Stack.Screen name="ChildTabScreen" component={childrenTabScreen} />
         </Stack.Group>
         ) : (
           <Stack.Group
@@ -50,7 +66,7 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} />
           </Stack.Group>
         )}
-        <Stack.Group
+        {/* <Stack.Group
           screenOptions={{
             headerShown: false,
             // cardStyle: { backgroundColor: 'white' }
@@ -59,7 +75,7 @@ export default function App() {
           <ChildStack.Screen name="ChildMain" component={ChildMain} />
           <ChildStack.Screen name="Mission" component={Mission} />
           <ChildStack.Screen name="Analysis" component={Analysis} />
-        </Stack.Group>
+        </Stack.Group> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

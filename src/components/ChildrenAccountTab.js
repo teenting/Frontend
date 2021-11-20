@@ -93,7 +93,7 @@ export default function ChildrenAccountTab() {
   const navigation = useNavigation()
 
   return (
-      <AccountTab onPress={() => {navigation.push('ChildMain')}}>
+      <AccountTab onPress={() => {navigation.push('ChildTabScreen', { screen: 'ChildMain' })}}>
         <ChildrenNameContainer>
           <ChildrenName>민수</ChildrenName>
         </ChildrenNameContainer>

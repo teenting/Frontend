@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
+import { useRoute } from '@react-navigation/native';
 
 const bellImage = require('../styles/images/icon/bell.png');
 
@@ -70,12 +71,13 @@ const AnalysisButtonImage = styled(MissionButtonImage)``;
 
 export default function NavigationBar() {
 const navigation = useNavigation();
+const route = useRoute();
 
   return (
     <NavigationBarContainer>
 
       <MissionButtonContainer>
-        <TouchableOpacity onPress={() => navigation.navigate('Mission')}>
+        <TouchableOpacity onPress={() => route.name !== 'Mission' ? navigation.replace('Mission') : null}>
           <MissionButton>
             <MissionButtonImage source={bellImage}/>
           </MissionButton>
@@ -83,7 +85,7 @@ const navigation = useNavigation();
       </MissionButtonContainer>
 
       <HomeButtonContainer>
-        <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+        <TouchableOpacity onPress={() => route.name !== 'ChildMain' ? navigation.navigate('ChildMain') : null}>
           <HomeButton>
             <HomeButtonImage source={bellImage}/>
           </HomeButton>
@@ -91,7 +93,7 @@ const navigation = useNavigation();
       </HomeButtonContainer>
 
       <AnalysisButtonContainer>
-        <TouchableOpacity onPress={() => navigation.navigate('Analysis')}>
+        <TouchableOpacity onPress={() => route.name !== 'Analysis' ? navigation.navigate('Analysis') : null}>
           <AnalysisButton>
             <AnalysisButtonImage source={bellImage}/>
           </AnalysisButton>
