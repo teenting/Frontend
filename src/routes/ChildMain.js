@@ -5,6 +5,7 @@ import BackButtonHeader from '../components/BackButtonHeader';
 import NavigationBar from '../components/NavigationBar';
 import MyAccountContainer from '../components/MyAccountContainer';
 import UsageBox from '../components/UsageBox';
+import { useNavigation } from '@react-navigation/native';
 
 const refresh = require('../styles/images/icon/refresh.png')
 
@@ -14,10 +15,6 @@ const Screen = styled.View`
   height: 100%;
   display: flex;
   align-items: center;
-`;
-
-// 헤더
-const Header = styled.View`
 `;
 
 // const ChildPhotoContainer = styled.View`
@@ -48,7 +45,7 @@ const ButtonsContainer = styled.View`
 `;
 
 // 버튼 공통양식
-const Button = styled.View`
+const Button = styled.TouchableOpacity`
   width: 35%;
   height: 40%;
   border-radius: 10px;
@@ -169,13 +166,15 @@ const UsageInfoPay = styled.Text`
 `;
 
 export default function ChildMain() {
+  const navigation = useNavigation();
+
   return (
     <Screen>
         {/* <ChildPhotoContainer /> */}
       <BackButtonHeader />
       <OuterAccountContainer>
         <ButtonsContainer>
-          <TransferButton>
+          <TransferButton onPress={() => navigation.push('Transfer')}>
             <ButtonTitle>송금 하기</ButtonTitle>
           </TransferButton>
           <LimitButton>
