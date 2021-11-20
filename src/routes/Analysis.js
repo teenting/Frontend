@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
 import CategoryContainer from '../components/CategoryContainer';
 
-const DateList = ['1년', '6개월', '1개월', '1주']
+const DateList = [
+  {
+    id: 0,
+    value: '1년',
+  },
+  {
+    id: 1,
+    value: '6개월',
+  }, {
+    id: 2,
+    value: '1개월',
+  }, {
+    id: 3,
+    value: '1주',
+  }
+]
 
 const greencircle = require('../styles/images/icon/greenCircle.png');
 
@@ -25,7 +40,7 @@ const DateScrollContainer = styled.View`
 `;
 
 const DateScrollButton = styled.TouchableOpacity`
-  background-color: white;
+  background-color: ${(props) => props.active ? '#00ac84' : 'white'};
   width: 18%;
   height: 70%;
   border-radius: 10px;
@@ -36,6 +51,7 @@ const DateScrollButton = styled.TouchableOpacity`
 `;
 
 const DateScrollText = styled.Text`
+  color: ${(props) => props.active ? 'white' : 'black'};
   font-size: 15px;
 `;
 
@@ -111,13 +127,15 @@ const CategoryTitle = styled.Text`
 `;
 
 export default function Analysis() {
+  const [clicked, setClicked] = useState(0);
+
   return (
     <Screen>
       <BackButtonHeader />
       <DateScrollContainer>
-        { DateList.map((date) => (
-          <DateScrollButton>
-            <DateScrollText>{date}</DateScrollText>
+        { DateList.map(({id, value}) => (
+          <DateScrollButton active={clicked === id} onPress={() => setClicked(id)}>
+            <DateScrollText active={clicked === id}>{value}</DateScrollText>
           </DateScrollButton>
         )) }
       </DateScrollContainer>
