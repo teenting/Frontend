@@ -1,12 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import styled from 'styled-components';
+import BackButtonHeader from '../components/BackButtonHeader';
 import NavigationBar from '../components/NavigationBar';
+
+const Screen = styled.View`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  position: relative;
+`;
 
 export default function Mission() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Screen>
+      <BackButtonHeader/>
       <Text>This is mission page</Text>
       <NavigationBar/>
-    </View>
+    </Screen>
   )
 }
