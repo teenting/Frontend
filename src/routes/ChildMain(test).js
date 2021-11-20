@@ -16,7 +16,7 @@ const Screen = styled.View`
 
 // 헤더
 const Header = styled.View`
-  /* background-color: yellow; */
+  background-color: yellow;
   width: 100%;
   height: 11.8%;
   position: absolute;
@@ -34,7 +34,7 @@ const ChildPhotoContainer = styled.View`
 
 // 계좌
 const AccountContainer = styled.View`
-  /* background-color: green; */
+  background-color: green;
   width: 100%;
   height: 36%;
   position: absolute;
@@ -52,7 +52,7 @@ const Account = styled.View`
 `;
 
 const AccountHeader = styled.View`
-  /* background-color: blue; */
+  background-color: blue;
   width: 100%;
   height: 35%;
   position: absolute;
@@ -74,7 +74,7 @@ const RefreshImage = styled.Image`
 `;
 
 const MoneyContainer = styled.View`
-  /* background-color: black; */
+  background-color: black;
   width: 100%;
   height: 55%;
   margin-top: 35px;
@@ -88,7 +88,7 @@ const MoneyTitle = styled.Text`
 `;
 
 const BankContainer = styled.View`
-  /* background-color: red; */
+  background-color: red;
   width: 100%;
   height: 25%;
   display: flex;
@@ -109,7 +109,7 @@ const AccountNumber = styled.Text`
 
 // 송금하기, 한도 설정 버튼
 const ButtonsImageContainer = styled.View`
-  /* background-color:  black; */
+  background-color:  black;
   width: 80%;
   height: 10%;
   position: absolute;
@@ -150,7 +150,7 @@ const LimitButton = styled.View`
 `;
 
 const LimitButtonTitle = styled.Text`
-  /* background-color: black; */
+  background-color: black;
   width: 100%;
   height: 50%;
   color: #ffffff;
@@ -161,7 +161,7 @@ const LimitButtonTitle = styled.Text`
 
 // 사용 내역
 const UsageContationer = styled.View`
-  /* background-color: blue; */
+  background-color: blue;
   width: 100%;
   height: 53%;
   position: absolute;
@@ -171,7 +171,7 @@ const UsageContationer = styled.View`
 `;
 
 const UsageTitle = styled.Text`
-  /* background-color: yellow; */
+  background-color: yellow;
   width: 100%;
   height: 10%;
   color: #6E6E6E;
@@ -182,7 +182,7 @@ const UsageTitle = styled.Text`
 `;
 
 const UsageBox = styled.View`
-  /* background-color: black; */
+  background-color: black;
   width: 100%;
   height: 95%;
   margin-top: 40px;
@@ -200,7 +200,7 @@ const Usage = styled.View`
 `;
 
 const UsageInfo = styled.View`
-  /* background-color: blue; */
+  background-color: blue;
   width: 100%;
   height: 15%;
   display: flex;
@@ -216,7 +216,7 @@ const UsageInfoPhoto = styled.View`
 `;
 
 const UsageInfoContainer = styled.View`
-  /* background-color: red; */
+  background-color: red;
   text-align: center;
   position: absolute;
   left: 50px;
@@ -233,7 +233,7 @@ const UsageInfoBank = styled.Text`
 `;
 
 const UsageInfoPayContainter = styled.View`
-  /* background-color: green; */
+  background-color: green;
   text-align: center;
   margin-left: auto;
 `;
