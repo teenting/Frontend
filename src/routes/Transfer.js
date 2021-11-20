@@ -1,14 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Modal, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
 //import TouchableScale from 'react-native-touchable-scale';
 
-const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '1', '0', '2' ]
-const PasswordBubbleList = ['*', '*', '*', '*', '*', '*']
+const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0' ];
+const testPassword = 123456;
+const Password = [];
+let PasswordBubbleList = [
+  {
+    id: 0,
+    text: '*',
+    active: false
+  },
+  {
+    id: 1,
+    text: '*',
+    active: false
+  },
+  {
+    id: 2,
+    text: '*',
+    active: false
+  },
+  {
+    id: 3,
+    text: '*',
+    active: false
+  },
+  {
+    id: 4,
+    text: '*',
+    active: false
+  },
+  {
+    id: 5,
+    text: '*',
+    active: false
+  },
+];
 
 const closeButtonImage = require('../styles/images/icon/closeButton.png');
 const rightArrowImage = require('../styles/images/icon/rightArrow.png');
+const backspace = require('../styles/images/icon/backspace.png');
 
 const Screen = styled.View`
   width: 100%;
@@ -65,6 +99,7 @@ const NumberPad = styled.TouchableOpacity`
   width: 30%;
   height: 25%;
   justify-content: center;
+  align-items: center;
 `;
 
 const NumberText = styled.Text`
@@ -72,6 +107,11 @@ const NumberText = styled.Text`
   width: 100%;
   font-size: 28px;
   text-align: center;
+`;
+
+const DeleteImage = styled.Image`
+  width: 30px;
+  height: 20px;
 `;
 
 // 송금하기 버튼있는 구역
@@ -167,7 +207,7 @@ const PasswordBubble = styled.View`
 `;
 
 const EachBubble = styled.View`
-  background-color: #BAB9B9;
+  background-color: ${(props) => props.active ? '#ADEFDF' : '#BAB9B9'};
   width: 10%;
   height: 85%;
   border-radius: 10px;
@@ -177,6 +217,7 @@ const EachBubble = styled.View`
 
 // 비밀번호 * 표시 텍스트
 const BlindStar = styled.Text`
+  color: ${(props) => props.active ? '#00AC84' : 'black'};
   font-size: 32px;
 `;
 
@@ -236,19 +277,84 @@ const PasswordCheck = styled.Text`
 
 export default function Transfer() {
   const [num, setNum] = useState('');
+  const [money, setMoney] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [passNum, setPassNum] = useState(0);
 
   const handleNumClick = (number) => {
-    console.log('Hi');
     setNum(num => num + number);
-  }
+  };
 
-  const handleSubmit = () => {
+  const handleTransfer = () => {
+    setMoney(num);
     setModalVisible(true);
+  };
+
+  const handleInput = (number) => {
+    Password.push(Number(number));
+    PasswordBubbleList[passNum].active = true;
+    setPassNum(passNum => passNum >= 5 ? passNum = 5 : passNum + 1);
+    if (Password.length !== 6) {
+      null
+    } else { 
+      let numPassword = Number(Password.join(''));
+      Password.length = 0;
+      setPassNum(0);
+      PasswordBubbleList[0].active = false;
+      PasswordBubbleList[1].active = false;
+      PasswordBubbleList[2].active = false;
+      PasswordBubbleList[3].active = false;
+      PasswordBubbleList[4].active = false;
+      PasswordBubbleList[5].active = false;
+      if (numPassword === testPassword) {
+        alert('송금 성공!')
+      } else {
+        alert('비밀번호가 틀렸습니다.')
+      }
+    }
+  };
+
+  const handleDelete = () => {
+    Password.pop();
+    setPassNum(passNum => passNum <= 0 ? passNum = 0 : passNum - 1);
+    if ( passNum > 0 ) {
+      PasswordBubbleList[passNum - 1].active = false;
+    } else {
+      null
+      setPassNum(0);
+    }
   }
 
   return (
-    <Screen>   
+    <Screen> 
+      <TransferTitle>송금하기</TransferTitle>
+      <BackButtonHeader>
+      </BackButtonHeader>
+      <MoneyInputContainer>
+        <InnerMoneyInputContainer>
+          <MoneyInput value={num} maxLength={10} onChangeText={setNum}></MoneyInput>
+          <MoneyUnitText>원</MoneyUnitText>
+        </InnerMoneyInputContainer>
+      </MoneyInputContainer>
+      <NumberPadContainer>
+        { NumberList.map((number) => (
+          <NumberPad  keyboardType = 'numeric' onPress={() => handleNumClick(number)}>
+              <NumberText>{number}</NumberText>
+          </NumberPad>
+        )) }
+        <NumberPad>
+          <DeleteImage source={backspace} />
+        </NumberPad>
+      </NumberPadContainer>
+      <SubmitButtonContainer>
+        <TransferButton onPress={() => handleTransfer()}>
+          <TransferButtonText>송금하기</TransferButtonText>
+          <TransferButtonImage source={rightArrowImage}/>
+        </TransferButton>
+      </SubmitButtonContainer>
+
+        {/* 모달 화면 */}
       <Modal
         animationType="slide"
         visible={modalVisible}
@@ -268,26 +374,31 @@ export default function Transfer() {
             </PasswordInputTitleContainer>
             <PasswordBubbleContainer>
               <PasswordBubble>
-                { PasswordBubbleList.map((bubble) => (
-                  <EachBubble>
-                    <BlindStar>{bubble}</BlindStar>
+                { PasswordBubbleList.map(({id, text, active}) => (
+                  <EachBubble key={id} active={active}>
+                    <BlindStar active={active}>{text}</BlindStar>
                   </EachBubble>
                 )) }
               </PasswordBubble>
             </PasswordBubbleContainer>
             <TransferedMoneyContainer>
-              <TransferedMoney>1500원을 송금합니다.</TransferedMoney>
+              <TransferedMoney>{money}원을 송금합니다.</TransferedMoney>
             </TransferedMoneyContainer>
           </PasswordInfoContainer>
           
           {/* 모달 비밀번호 키패드 */}
           <KeyPadContainer>
             <KeyPad>
-              { NumberList.map((number) => (
-                <RandomButton>
+            { NumberList.map((number) => (
+                <NumberPad onPress={() => {handleInput(number)}}>
                   <NumberText>{number}</NumberText>
-                </RandomButton>
-              ) )}
+                </NumberPad>
+            ) )}
+              <NumberPad onPress={() => {
+                handleDelete()
+                }}>
+                  <DeleteImage source={backspace} />
+              </NumberPad>
             </KeyPad>
             <PasswordCheckContainer>
               <PasswordCheck>비밀번호가 일치해야 합니다.</PasswordCheck>
@@ -296,29 +407,6 @@ export default function Transfer() {
           
         </ModalScreen>
       </Modal>
-
-      <TransferTitle>송금하기</TransferTitle>
-      <BackButtonHeader>
-      </BackButtonHeader>
-      <MoneyInputContainer>
-        <InnerMoneyInputContainer>
-          <MoneyInput value={num} maxLength={10} onChangeText={setNum}></MoneyInput>
-          <MoneyUnitText>원</MoneyUnitText>
-        </InnerMoneyInputContainer>
-      </MoneyInputContainer>
-      <NumberPadContainer>
-        { NumberList.map((number) => (
-          <NumberPad  keyboardType = 'numeric' onPress={() => handleNumClick(number)}>
-            <NumberText>{number}</NumberText>
-          </NumberPad>
-        ) )}
-      </NumberPadContainer>
-      <SubmitButtonContainer>
-        <TransferButton onPress={() => handleSubmit()}>
-          <TransferButtonText>송금하기</TransferButtonText>
-          <TransferButtonImage source={rightArrowImage}/>
-        </TransferButton>
-      </SubmitButtonContainer>
 
     </Screen>
   )
