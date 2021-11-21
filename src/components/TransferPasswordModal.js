@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Modal, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { useFonts } from 'expo-font';
+import TransferSuccess from '../routes/TransferSuccess';
 
 const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0' ];
 const testPassword = 123456;
@@ -231,7 +232,7 @@ export default function TransferPasswordModal({ visible, setVisible, money }) {
       PasswordBubbleList[4].active = false;
       PasswordBubbleList[5].active = false;
       if (numPassword === testPassword) {
-        alert('송금 성공!')
+        alert('송금 성공!');
       } else {
         alert('비밀번호가 틀렸습니다.')
       }
