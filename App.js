@@ -24,12 +24,10 @@ function childrenTabScreen() {
       <ChildTab.Navigator
         screenOptions={{
         headerShown: false,
+        tabBarActiveTintColor: '#00ac84',
+        tabBarInactiveTintColor: '#7F7F7F',
         // cardStyle: { backgroundColor: 'white' }
         }}
-        tabBarOptions={{
-          activeTintColor: '#00ac84',
-          inactiveTintColor: '#7F7F7F',
-      }}
       >
         <ChildTab.Screen name="ChildMain" component={ChildMain} />
         <ChildTab.Screen name="Mission" component={Mission} />

@@ -1,3 +1,4 @@
+// 송금 성공 시 뜨는 페이지, 2초 후에 메인 페이지로 redirect
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import styled from 'styled-components/native';

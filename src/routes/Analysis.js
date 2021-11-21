@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-nati
 import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
 import CategoryContainer from '../components/CategoryContainer';
+import { useFonts } from 'expo-font';
 
 const DateList = [
   {
@@ -99,10 +100,14 @@ const WholeUsageInnerText = styled.Text`
   width: ${(props) => props.width ? props.width : '100%'};
   font-size: 25px;
   text-align: center;
+  font-family: Helvetica;
 `;
 
 const WholeUsageInnerMoney = styled.Text`
-  font-size: 35px;
+  font-size: 40px;
+  font-family: ModernSans;
+  margin-top: 10px;
+  color: #6E6E6E;
 `;
 
 // '카테고리별' 제목과 카테고리 리스트가 있는 컨테이너
@@ -124,10 +129,21 @@ const CategoryTitleContainer = styled.View`
 const CategoryTitle = styled.Text`
   font-size: 17px;
   font-weight: bold;
+  font-family: Helvetica_Bold;
 `;
 
 export default function Analysis() {
   const [clicked, setClicked] = useState(0);
+  const [loaded] = useFonts({
+    ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
+    Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
+    Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
+    Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <Screen>
@@ -147,7 +163,7 @@ export default function Analysis() {
         <WholeUsageInnerContainer>
           <WholeUsageInnerText>총 지출</WholeUsageInnerText>
           <WholeUsageInnerMoney>12,300</WholeUsageInnerMoney>
-          <WholeUsageInnerText width={30}>원</WholeUsageInnerText>
+          <WholeUsageInnerText width={'30'}>원</WholeUsageInnerText>
         </WholeUsageInnerContainer>
       </WholeUsageViewContainer>
       <OuterCategoryContainer>

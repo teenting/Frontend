@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Modal, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
-//import TouchableScale from 'react-native-touchable-scale';
+import { useFonts } from 'expo-font';
 
 const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0' ];
 const testPassword = 123456;
@@ -54,6 +54,8 @@ const TransferTitle = styled.Text`
   position: absolute;
   top: 70px;
   left: 170px;
+  font-family: Helvetica_Bold;
+  font-size: 18px;
 `;
 
 // 입력한 액수가 나타나는 구역
@@ -77,11 +79,13 @@ const InnerMoneyInputContainer = styled.View`
 const MoneyInput = styled.TextInput`
   /* background-color: gold; */
   font-size: 45px;
+  font-family: ModernSans;
 `;
 
 const MoneyUnitText = styled.Text`
   color: #414141;
-  font-size: 45px;
+  font-size: 40px;
+  font-family: Helvetica;
 `;
 
 const NumberPadContainer = styled.View`
@@ -107,6 +111,7 @@ const NumberText = styled.Text`
   width: 100%;
   font-size: 28px;
   text-align: center;
+  font-family: Helvetica;
 `;
 
 const DeleteImage = styled.Image`
@@ -136,6 +141,7 @@ const TransferButton = styled.TouchableOpacity`
 const TransferButtonText = styled.Text`
   color: white;
   font-size: 15px;
+  font-family: Helvetica;
 `;
 
 const TransferButtonImage = styled.Image`
@@ -185,6 +191,7 @@ const PasswordInputTitleContainer = styled.View`
 const PasswordInputTitle = styled.Text`
   color: #707070;
   font-size: 20px;
+  font-family: Helvetica;
 `;
 
 const PasswordBubbleContainer = styled.View`
@@ -219,6 +226,7 @@ const EachBubble = styled.View`
 const BlindStar = styled.Text`
   color: ${(props) => props.active ? '#00AC84' : 'black'};
   font-size: 32px;
+  font-family: Helvetica;
 `;
 
 // 보내는 금액 표시된 컨테이너
@@ -234,6 +242,7 @@ const TransferedMoneyContainer = styled.View`
 const TransferedMoney = styled.Text`
   color: #707070;
   font-size: 15px;
+  font-family: Helvetica_Light;
 `;
 
 // 랜덤하게 번호 나오는 키패드 + 비밀번호 맞는지 확인하는 컨테이너
@@ -272,6 +281,7 @@ const PasswordCheckContainer = styled.View`
 const PasswordCheck = styled.Text`
   color: #707070;
   font-size: 15px;
+  font-family: Helvetica_Light;
 `;
 
 
@@ -281,6 +291,12 @@ export default function Transfer() {
   const [modalVisible, setModalVisible] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [passNum, setPassNum] = useState(0);
+  const [loaded] = useFonts({
+    ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
+    Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
+    Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
+    Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
+  });
 
   const handleNumClick = (number) => {
     setNum(num => num + number);
@@ -324,6 +340,10 @@ export default function Transfer() {
       null
       setPassNum(0);
     }
+  }
+
+  if (!loaded) {
+    return null;
   }
 
   return (

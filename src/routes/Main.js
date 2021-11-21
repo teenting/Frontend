@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import MyAccountContainer from '../components/MyAccountContainer';
 import ChildrenAccountTab from '../components/ChildrenAccountTab';
 import RecentActivityTab from '../components/RecentActivityTab';
+import { useFonts } from 'expo-font';
 
 const background = require('../styles/images/background.png');
 const logo = require('../styles/images/logo/logo_green_circle.png');
@@ -120,6 +121,7 @@ const AccountContainer = styled.View`
 const ChildrenAccoutTitle = styled.Text`
   color: #00ac84;
   font-size: 20px;
+  font-family: Helvetica;
   margin-top: 3px;
   margin-bottom: 15px;
 `;
@@ -142,6 +144,7 @@ const RecentActivityTextContainer = styled.View`
 const RecentActivityText = styled.Text`
   color: #6E6E6E;
   font-size: 20px;
+  font-family: Helvetica;
 `;
 
 const RecentActivityListContainer = styled.View`
@@ -154,6 +157,18 @@ const RecentActivityListContainer = styled.View`
 
 export default function Main() {
   const navigation = useNavigation();
+  const [loaded] = useFonts({
+    ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
+    Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
+    Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
+    Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
+  });
+
+  
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <Screen>
         <BackgroundImage source={background} />

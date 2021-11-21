@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
 
 const rightArrow = require('../styles/images/icon/rightArrow.png');
 const unitWon = require('../styles/images/icon/unitWon.png');
@@ -55,6 +56,7 @@ const ChildrenMoneyContainer = styled.View`
 `;
 
 const ChildrenMoney = styled.Text`
+  font-family: ModernSans;
   color: #6E6E6E;
   font-size: 28px;
 `;
@@ -99,7 +101,18 @@ const TransferTabImage = styled.Image`
 `;
 
 export default function ChildrenAccountTab() {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const [loaded] = useFonts({
+    ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
+    Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
+    Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
+    Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
+  });
+
+  
+  if (!loaded) {
+    return null;
+  }
 
   return (
       <AccountTab onPress={() => {navigation.push('ChildTabScreen', { screen: 'ChildMain' })}}>

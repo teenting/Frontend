@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 import { useRoute } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
 
 const refresh = require('../styles/images/icon/refresh.png');
 
@@ -35,10 +36,11 @@ const MyAccountTitle = styled.Text`
   flex: 9;
   color: #BAB9B9;
   font-size: 15px;
+  font-family: Helvetica;
 `;
 
 const RefreshImageContainer = styled.TouchableOpacity`
-  flex: 1
+  flex: 1;
 `;
 
 const RefreshImage = styled.Image`
@@ -56,7 +58,8 @@ const MyMoneyContainer = styled.View`
 
 const MyMoney = styled.Text`
   color: #6E6E6E;
-  font-size: 40px;
+  font-size: 50px;
+  font-family: ModernSans;
 `;
 
 // 은행 이름 + 계좌번호
@@ -74,16 +77,29 @@ const BankName = styled.Text`
   color: #BAB9B9;
   font-size: 14px;
   margin-right: 5px;
+  font-family: Helvetica;
 `;
 
 const AccountNumber = styled.Text`
   color: #6E6E6E;
   font-size: 14px;
+  font-family: Helvetica;
 `;
 
 export default function MyAccountContainer({ children, ...rest }) {
   const navigation = useNavigation();
   const route = useRoute();
+  const [loaded] = useFonts({
+    ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
+    Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
+    Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
+    Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
+  });
+
+  
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <MyAccountContainerBox {...rest} onPress={() => route.name == 'Main' ? navigation.navigate('MyAccountDetails') : null}>
