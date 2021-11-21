@@ -176,7 +176,7 @@ export default function Mission() {
 
       <MissionContainer>
         <MissionModal>
-          <MissionList/>
+          <MissionList />
           <MissionList/>
           <MissionList/>
         </MissionModal>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 
 // Each 미션 리스트
-const EachMissionContainer = styled.TouchableOpacity`
+const EachMissionContainer = styled.View`
   /* background-color: #E5C1C5; */
   width: 100%;
   height: 18%;
@@ -15,7 +15,7 @@ const EachMissionContainer = styled.TouchableOpacity`
 `;
 
 // 미션 진행 상황(green, red, gray)
-const MissionResultContainer = styled.View`
+const MissionResultContainer = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -48,9 +48,9 @@ const MissionMoney = styled.Text`
 export default function MissionList() {
   return (
     <EachMissionContainer>
-
+      
       <MissionResultContainer>
-        <MissionResultPhoto/>
+          <MissionResultPhoto/>
       </MissionResultContainer>
 
       <MissionListContainer>
