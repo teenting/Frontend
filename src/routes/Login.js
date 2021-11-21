@@ -50,47 +50,47 @@ const LoginContainer = styled.View`
   flex: 1;
 `;
 
-const ID = styled.TextInput`
-  background-color: #fff;
-  width: 80%;
-  height: 30%;
-  margin: 30px;
-  position: absolute;
-  flex-direction: row;
-  flex: 1;
-  paddingLeft: 10;
-  border-radius: 10;
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 1,
-  };
-  shadowOpacity: 0.2;
-  shadowRadius: 2.22;
+// const ID = styled.TextInput`
+//   background-color: #fff;
+//   width: 80%;
+//   height: 30%;
+//   margin: 30px;
+//   position: absolute;
+//   flex-direction: row;
+//   flex: 1;
+//   paddingLeft: 10;
+//   border-radius: 10;
+//   shadowColor: "#000",
+//   shadowOffset: {
+//     width: 0,
+//     height: 1,
+//   };
+//   opacity: 0.2;
+//   shadowRadius: 2.22;
 
-  elevation: 3;
-`;
+//   elevation: 3;
+// `;
 
-const Password = styled.TextInput`
-  background-color: white;
-  width: 80%;
-  height: 30%;
-  margin: 100px;
-  position: absolute;
-  flex-direction: row;
-  flex: 1;
-  paddingLeft: 10;
-  border-radius: 10;
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 1,
-  };
-  shadowOpacity: 0.2;
-  shadowRadius: 2.22;
+// const Password = styled.TextInput`
+//   background-color: white;
+//   width: 80%;
+//   height: 30%;
+//   margin: 100px;
+//   position: absolute;
+//   flex-direction: row;
+//   flex: 1;
+//   paddingLeft: 10;
+//   border-radius: 10;
+//   shadowColor: "#000",
+//   shadowOffset: {
+//     width: 0,
+//     height: 1,
+//   };
+//   shadowOpacity: 0.2;
+//   shadowRadius: 2.22;
 
-  elevation: 3;
-`;
+//   elevation: 3;
+// `;
 
 // 버튼
 const LoginButtonContainer = styled.View`
