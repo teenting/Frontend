@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View , Image} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,6 +15,13 @@ import Login from './src/routes/Login';
 import MyAccountDetails from './src/routes/MyAccountDetails';
 import TransferSuccess from './src/routes/TransferSuccess';
 
+const inactive_home = require('./src/styles/images/icon/home_gray.png');
+const inactive_mission = require('./src/styles/images/icon/mission_gray.png');
+const inactive_graph = require('./src/styles/images/icon/graph_gray.png');
+
+const active_home = require('./src/styles/images/icon/home_green.png');
+const active_mission = require('./src/styles/images/icon/mission_green.png');
+const active_graph = require('./src/styles/images/icon/graph_green.png');
 
 const Stack = createNativeStackNavigator();
 const ChildTab = createBottomTabNavigator();
@@ -29,9 +36,27 @@ function childrenTabScreen() {
         // cardStyle: { backgroundColor: 'white' }
         }}
       >
-        <ChildTab.Screen name="ChildMain" component={ChildMain} />
-        <ChildTab.Screen name="Mission" component={Mission} />
-        <ChildTab.Screen name="Analysis" component={Analysis} />
+        <ChildTab.Screen name="ChildMain" component={ChildMain} options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <Image source={focused ? active_home : inactive_home} style={{width: 20, height: 20, overflow: 'visible'}}/>
+            )
+          }
+        }}/>
+        <ChildTab.Screen name="Mission" component={Mission} options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <Image source={focused ? active_mission : inactive_mission} style={{width: 19, height: 19, overflow: 'visible'}}/>
+            )
+          }
+        }}/>
+        <ChildTab.Screen name="Analysis" component={Analysis} options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <Image source={focused ? active_graph : inactive_graph} style={{width: 16, height: 16, overflow: 'visible'}}/>
+            )
+          }
+        }}/>
       </ChildTab.Navigator>
   )
 }
