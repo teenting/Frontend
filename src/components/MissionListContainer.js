@@ -4,18 +4,19 @@ import styled from 'styled-components';
 
 // Each 미션 리스트
 const EachMissionContainer = styled.TouchableOpacity`
-  /* background-color: #E5C1C5; */
+  /* background-color: peachpuff; */
   width: 100%;
-  height: 18%;
+  height: 65px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  position: relative;
-  padding: 20px;
+  padding: 0px 20px;
+  margin: 3px 0px;
 `;
 
 // 미션 진행 상황(green, red, gray)
 const MissionResultContainer = styled.View`
+  /* background-color: powderblue; */
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -31,6 +32,7 @@ const MissionResultPhoto = styled.View`
 
 // 미션 제목, 비용
 const MissionListContainer = styled.View`
+  /* background-color: peru; */
   flex: 4;
   justify-content: center;
 `;

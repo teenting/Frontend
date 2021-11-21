@@ -1,8 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React,{ useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
-import MissionList from '../components/MissionList';
+import MissionListContainer from '../components/MissionListContainer';
+import NewMissionModal from '../components/NewMissionModal';
+import MyAccountDetails from './MyAccountDetails';
 
 // 전체 화면
 const Screen = styled.View`
@@ -15,7 +17,7 @@ const Screen = styled.View`
 
 // 이름
 const NameContainer = styled.View`
-  /* background-color: #E5C1C5; */
+  /* background-color: rebeccapurple; */
   width: 100%;
   height: 15%;
 `;
@@ -29,7 +31,7 @@ const NameTitle = styled.Text`
 
 // 퍼센트 바 Layout
 const GoalContainer = styled.View`
-  /*background-color: #C3E2DD; */
+  /* background-color: powderblue; */
   width: 100%;
   height: 18%;
   display: flex;
@@ -74,9 +76,9 @@ const GoalNumberContainer = styled.View`
   background-color: #00BE92;
   width: 80%;
   height: 35%;
-  borderTopLeftRadius: 10px;
-  borderTopRightRadius: 10px;
-  borderBottomLeftRadius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   justify-content: center;
   align-items: center;
   `;
@@ -108,7 +110,7 @@ const GoalPointCircle = styled.View`
 
 // 미션
 const MissionContainer = styled.View`
-  /* background-color: #6ECEDA; */
+  /* background-color: plum; */
   width: 100%;
   height: 55%;
   position: absolute;
@@ -119,14 +121,14 @@ const MissionModal = styled.View`
   background-color: #ffffff;
   width: 100%;
   height: 100%;
-  borderTopLeftRadius: 30;
-  borderTopRightRadius: 30;
-  padding-top: 15%;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding-top: 8%;
 `;
 
 // 미선 추가 버튼
-const PlusButtonContainer = styled.TouchableOpacity`
-  /* background-color: #6ECEDA; */
+const PlusButtonContainer = styled.View`
+  /* background-color: peru; */
   width: 100%;
   height: 15%;
   display: flex;
@@ -136,7 +138,7 @@ const PlusButtonContainer = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const PlusButton = styled.View`
+const PlusButton = styled.TouchableOpacity`
   background-color: #00ac84;
   width: 80%;
   height: 65%;
@@ -152,6 +154,12 @@ const PlusButtonTitle = styled.Text`
 `;
 
 export default function Mission() {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleNewMission = () => {
+    setModalVisible(true);
+  }
+
   return (
     <Screen>
       <BackButtonHeader/>
@@ -176,16 +184,18 @@ export default function Mission() {
 
       <MissionContainer>
         <MissionModal>
-          <MissionList/>
-          <MissionList/>
-          <MissionList/>
+          <MissionListContainer/>
+          <MissionListContainer/>
+          <MissionListContainer/>
         </MissionModal>
         <PlusButtonContainer>
-          <PlusButton>
+          <PlusButton onPress={() => handleNewMission()}>
             <PlusButtonTitle>미션 추가</PlusButtonTitle>
           </PlusButton>
         </PlusButtonContainer>
       </MissionContainer>
+
+      <NewMissionModal visible={modalVisible} setVisible={setModalVisible} />
     </Screen>
   )
 }
