@@ -50,10 +50,18 @@ const Screen = styled.View`
   display: flex;
 `;
 
+const TitleContainer = styled.View`
+  /* background-color: skyblue; */
+  width: 100%;
+  height: 13%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+`;
+
 const TransferTitle = styled.Text`
   position: absolute;
-  top: 70px;
-  left: 170px;
+  bottom: 20px;
   font-family: Helvetica_Bold;
   font-size: 18px;
 `;
@@ -348,7 +356,9 @@ export default function Transfer() {
 
   return (
     <Screen> 
-      <TransferTitle>송금하기</TransferTitle>
+      <TitleContainer>
+        <TransferTitle>송금하기</TransferTitle>
+      </TitleContainer>
       <BackButtonHeader>
       </BackButtonHeader>
       <MoneyInputContainer>

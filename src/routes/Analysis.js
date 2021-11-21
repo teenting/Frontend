@@ -28,6 +28,23 @@ const Screen = styled.View`
   width: 100%;
   height: 100%;
   display: flex;
+  position: relative;
+`;
+
+const TitleContainer = styled.View`
+  /* background-color: skyblue; */
+  width: 100%;
+  height: 13%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AnalysisTitle = styled.Text`
+  position: absolute;
+  bottom: 20px;
+  font-family: Helvetica_Bold;
+  font-size: 18px;
 `;
 
 // 날짜 조정 버튼있는 컨테이너
@@ -147,7 +164,11 @@ export default function Analysis() {
 
   return (
     <Screen>
+      <TitleContainer>
+        <AnalysisTitle>분석하기</AnalysisTitle>
+      </TitleContainer>
       <BackButtonHeader />
+      
       <DateScrollContainer>
         { DateList.map(({id, value}) => (
           <DateScrollButton active={clicked === id} onPress={() => setClicked(id)}>

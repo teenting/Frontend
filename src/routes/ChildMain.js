@@ -14,15 +14,35 @@ const Screen = styled.View`
   height: 100%;
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
-// const ChildPhotoContainer = styled.View`
-//   background-color: #00ac84;
-//   width: 40px;
-//   height: 40px;
-//   border-radius: 40px;
-//   bottom: 0;
-//   `;
+const TitleContainer = styled.View`
+  /* background-color: skyblue; */
+  width: 100%;
+  height: 13%;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MainTitle = styled.Text`
+  position: absolute;
+  bottom: 20px;
+  font-family: Helvetica_Bold;
+  font-size: 18px;
+`;
+
+const ChildPhotoContainer = styled.View`
+  position: absolute;
+  background-color: #00ac84;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  right: 20px;
+  bottom: 10px;
+  box-shadow: 3px 3px 6px rgba(100, 100, 111, 0.3) ;
+  `;
 
 const OuterAccountContainer = styled.View`
   /* background-color: salmon; */
@@ -169,8 +189,12 @@ export default function ChildMain() {
 
   return (
     <Screen>
-        {/* <ChildPhotoContainer /> */}
+      <TitleContainer>
+        <MainTitle>자녀 계좌</MainTitle>
+        <ChildPhotoContainer />
+      </TitleContainer>
       <BackButtonHeader />
+      
       <OuterAccountContainer>
         <ButtonsContainer>
           <TransferButton onPress={() => navigation.push('Transfer')}>
