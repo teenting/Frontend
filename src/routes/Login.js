@@ -40,7 +40,7 @@ const ID = styled.TextInput`
   background-color: #ffffff;
   width: 80%;
   height: 30%;
-  paddingLeft: 20px;
+  padding-left: 20px;
   border-radius: 10px;
   box-shadow: 0px 7px 15px rgba(100, 100, 111, 0.2);
   margin-top: 20px;
