@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 
+const success = require('../styles/images/icon/check_green.png');
+const failure = require('../styles/images/icon/x_red.png');
+
+
 // Each 미션 리스트
 const EachMissionContainer = styled.TouchableOpacity`
   /* background-color: peachpuff; */
@@ -22,12 +26,19 @@ const MissionResultContainer = styled.View`
   align-items: center;
 `;
 
-const MissionResultPhoto = styled.View`
-  background-color: #00be92;
+const MissionResultBox = styled.View`
+  background-color: #B3F0E2;
   width: 50px;
   height: 50px;
-  border-radius: 15;
-  opacity: 0.2;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ResultImage = styled.Image`
+  width: 20px;
+  height: 20px;
+  overflow: visible;
 `;
 
 // 미션 제목, 비용
@@ -52,7 +63,9 @@ export default function MissionList() {
     <EachMissionContainer>
 
       <MissionResultContainer>
-        <MissionResultPhoto/>
+        <MissionResultBox>
+          <ResultImage source={success} />
+        </MissionResultBox>
       </MissionResultContainer>
 
       <MissionListContainer>
