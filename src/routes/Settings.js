@@ -57,7 +57,7 @@ const TabArrow = styled.Image`
 `;
 
 
-export default function Notification() {
+export default function Settings() {
   
   const navigation = useNavigation();
   
