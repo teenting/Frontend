@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
 import MissionListContainer from '../components/MissionListContainer';
+import MissionResultModal from '../components/MissionResultModal';
 import NewMissionModal from '../components/NewMissionModal';
-import MyAccountDetails from './MyAccountDetails';
 
 // 전체 화면
 const Screen = styled.View`
@@ -154,6 +154,7 @@ const PlusButtonTitle = styled.Text`
 `;
 
 export default function Mission() {
+  const [resultModalVisible, setResultModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleNewMission = () => {
@@ -184,7 +185,7 @@ export default function Mission() {
 
       <MissionContainer>
         <MissionModal>
-          <MissionListContainer/>
+          <MissionListContainer resultModalVisible={resultModalVisible} setResultModalVisible={setResultModalVisible}/>
           <MissionListContainer/>
           <MissionListContainer/>
         </MissionModal>
@@ -195,6 +196,7 @@ export default function Mission() {
         </PlusButtonContainer>
       </MissionContainer>
 
+      <MissionResultModal visible={resultModalVisible} setVisible={setResultModalVisible} />
       <NewMissionModal visible={modalVisible} setVisible={setModalVisible} />
     </Screen>
   )

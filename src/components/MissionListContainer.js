@@ -58,9 +58,9 @@ const MissionMoney = styled.Text`
   margin-top: 5px;
 `;
 
-export default function MissionList() {
+export default function MissionList({ resultModalVisible, setResultModalVisible} ) {
   return (
-    <EachMissionContainer>
+    <EachMissionContainer onPress={() => setResultModalVisible(true)}>
 
       <MissionResultContainer>
         <MissionResultBox>

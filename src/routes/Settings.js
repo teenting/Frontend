@@ -4,8 +4,30 @@ import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
 import { useNavigation } from '@react-navigation/native';
 
-const AccountSettingsList = ['인증 및 보안', '결제', '송금', '자동이체']
-const AppSettingsList = ['앱 버전', '약관 및 개인정보 처리 내역', '탈퇴하기']
+const AccountSettingsList = [
+  {
+    id: 0,
+    name: '인증 및 보안'
+  }, {
+    id: 1,
+    name: '결제'
+  }, {
+    id: 2,
+    name: '송금'
+  }, {
+    id: 3,
+    name: '자동이체'
+}]
+const AppSettingsList = [
+  {
+    id: 0,
+    name: '앱 버전'
+  }, {
+    id: 1,
+    name: '약관 및 개인정보 처리 내역'
+  }, {
+    id: 2,
+    name: '탈퇴하기'}]
 
 const more = require('../styles/images/icon/moreArrow.png');
 
@@ -74,7 +96,7 @@ export default function Settings() {
       <AccountSettingsContainer>
         { AccountSettingsList.map((eachSetting) => (
           <TabContainer>
-            <TabText>{eachSetting}</TabText>
+            <TabText>{eachSetting.name}</TabText>
             <TabArrow source={more} />
           </TabContainer>
         )) }
@@ -83,7 +105,7 @@ export default function Settings() {
       <AppSettingsContainer>
         { AppSettingsList.map((eachSetting) => (
           <TabContainer>
-          <TabText>{eachSetting}</TabText>
+          <TabText>{eachSetting.name}</TabText>
           <TabArrow source={more} />
         </TabContainer>
         )) }
