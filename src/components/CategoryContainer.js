@@ -3,26 +3,31 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 
+const food = require('../styles/images/icon/food.png');
+const bus = require('../styles/images/icon/bus.png');
+const game = require('../styles/images/icon/game.png');
+const etc = require('../styles/images/icon/etc.png');
+
 const CategoryList = [
   {
     id: 0,
     name: '식비',
-    image: 'food'
+    image: food,
   },
   {
     id: 1,
     name: '교통비',
-    image: 'bus'
+    image: bus,
   },
   {
     id: 2,
     name: '문화생활비',
-    image: 'culture'
+    image: game,
   },
   {
     id: 3,
     name: '기타',
-    image: 'etc'
+    image: etc,
   },
 ]
 
@@ -59,7 +64,10 @@ const CategoryHeader = styled.View`
 `;
 
 const CategoryImage = styled.Image`
-
+  width: 25px;
+  height: 20px;
+  margin-right: 8px;
+  overflow: visible;
 `;
 
 const CategoryText = styled.Text`
@@ -73,6 +81,7 @@ export default function CategoryContainer() {
         { CategoryList.map(({id, name, image}) => (
           <CategoryBox>
             <CategoryHeader>
+              <CategoryImage source={image} />
               <CategoryText>{ name }</CategoryText>
             </CategoryHeader>
           </CategoryBox>
