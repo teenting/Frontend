@@ -15,14 +15,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sukyeongpark.TeenTingProject"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       }
     },
-    "web": {
-    }
+    "web": {}
   }
 }
