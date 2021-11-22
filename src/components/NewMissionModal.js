@@ -1,13 +1,15 @@
-import React from 'react';
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react'; 
+import { StyleSheet, Text, View, Modal, TouchableOpacity, Button} from 'react-native';
 import styled from 'styled-components/native';
 import { useFonts } from 'expo-font';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const closeButtonImage = require('../styles/images/icon/closeButton.png');
 const baby = require('../styles/images/icon/baby.png');
 const clock = require('../styles/images/icon/clock.png');
 const mission = require('../styles/images/icon/mission_customgray.png');
 const money = require('../styles/images/icon/money.png');
+const green_dropdown = require('../styles/images/icon/green_dropdown.png');
 
 const ModalHeader = styled.View`
   /* background-color: green; */
@@ -94,6 +96,59 @@ const PickContainer = styled.View`
   /* background-color: steelblue; */
   width: 55%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+`;
+
+const InputContainer = styled.TextInput`
+  /* background-color: tomato; */
+  font-size: 15px;
+  font-family: Helvetica;
+  padding: 0px 5px;
+  text-align: center;
+  
+`;
+
+const RecieverText = styled.Text`
+  font-size: 15px;
+`;
+
+const MissionInputContainer = styled(InputContainer)`
+  width: 95%;
+  height: 95%;
+`;
+const MoneyInputContainer = styled(InputContainer)`
+
+`;
+
+const MoneyUnitText = styled.Text`
+  /* background-color: teal; */
+  font-size: 15px;
+  margin-left: 3px;
+`;
+
+const DatePickerButton = styled.TouchableOpacity`
+  /* background-color: thistle; */
+  width: 55%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+`;
+
+const DatePickerText = styled.Text`
+  color: #00ac84;
+  font-size: 15px;
+  margin-right: 6px;
+`;
+
+const DatePickerDropDown = styled.Image`
+  width: 12px;
+  height: 12px;
+  margin-left: 6px;
 `;
 
 const SubmitContainer = styled.View`
@@ -128,10 +183,60 @@ export default function NewMissionModal({ visible, setVisible }) {
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
 
+  let today = new Date();
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth() + 1);
+  const [date, setDate] = useState(today.getDate());
+  const [missionEndDate, setMissionEndDate] = useState(today);
+  const [missionDetail, setMissionDetail] = useState('');
+  const [missionMoney, setMissionMoney] = useState('');
+
+  // let year = today.getFullYear(); // 년도
+  // let month = today.getMonth() + 1;  // 월
+  // let date = today.getDate();  // 날짜
+  // let day = today.getDay();  // 요일
+
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    hideDatePicker();
+    setYear(date.getFullYear());
+    setMonth(date.getMonth() + 1);
+    setDate(date.getDate());
+    setMissionEndDate(date);
+  };
+
   const handleSubmit = () => {
-    alert('전송이 완료되었습니다.')
-    setVisible(false);
+    if (missionDetail && missionMoney && !isNaN(missionMoney)) {
+      alert('새로운 미션이 추가되었습니다!');
+      setVisible(false);
+    } else if (isNaN(missionMoney)) {
+      alert('보상 칸은 숫자만 입력해주세요.');
+    } else if (missionMoney.length == 0) {
+      alert('보상 칸을 채워주세요!');
+    } else if (missionDetail.length == 0){
+      alert('미션 칸을 채워주세요!')
+    }
+
   }
+
+  useEffect(() => {
+    today = new Date();
+    setYear(today.getFullYear());
+    setMonth(today.getMonth() + 1);
+    setDate(today.getDate());
+    setMissionEndDate(today);
+    setMissionDetail('');
+    setMissionMoney('');
+  }, [visible])
 
   if (!loaded) {
     return null;
@@ -161,7 +266,9 @@ export default function NewMissionModal({ visible, setVisible }) {
             <MissionCustomImage source={baby}/>
               <MissionCustomTitle>대상</MissionCustomTitle>
             </MissionCustomTitleContainer>
-            <PickContainer></PickContainer>
+            <PickContainer>
+              <RecieverText>민수</RecieverText>
+            </PickContainer>
           </EachMissionCustom>
 
           <EachMissionCustom>
@@ -169,7 +276,20 @@ export default function NewMissionModal({ visible, setVisible }) {
             <MissionCustomImage source={clock}/>
               <MissionCustomTitle>마감일</MissionCustomTitle>
             </MissionCustomTitleContainer>
-            <PickContainer></PickContainer>
+
+
+              <DatePickerButton onPress={showDatePicker}>
+                <DatePickerText>{year}-{month}-{date}</DatePickerText>
+                <DatePickerDropDown source={green_dropdown} />
+              </DatePickerButton>
+              {/* <Button title= onPress={showDatePicker} /> */}
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+              />
+
           </EachMissionCustom>
 
           <EachMissionCustom>
@@ -177,7 +297,9 @@ export default function NewMissionModal({ visible, setVisible }) {
               <MissionCustomImage source={mission}/>
               <MissionCustomTitle>미션내용</MissionCustomTitle>
             </MissionCustomTitleContainer>
-            <PickContainer></PickContainer>
+            <PickContainer>
+              <MissionInputContainer value={missionDetail} onChangeText={setMissionDetail} placeholder="클릭하세요!"></MissionInputContainer>
+            </PickContainer>
           </EachMissionCustom>
 
           <EachMissionCustom>
@@ -185,7 +307,10 @@ export default function NewMissionModal({ visible, setVisible }) {
             <MissionCustomImage source={money}/>
               <MissionCustomTitle>보상</MissionCustomTitle>
             </MissionCustomTitleContainer>
-            <PickContainer></PickContainer>
+            <PickContainer>
+              <MoneyInputContainer value={missionMoney} keyboardType = 'numeric' onChangeText={setMissionMoney} placeholder="1500"></MoneyInputContainer>
+              <MoneyUnitText>원</MoneyUnitText>
+            </PickContainer>
           </EachMissionCustom>
         </MissionCustomCotainer>
 

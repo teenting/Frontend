@@ -69,7 +69,7 @@ const GoalPointContainer = styled.View`
   width: 13%;
   height: 40%;
   position: absolute;
-  right: 190;
+  right: 190px;
 `;
 
 const GoalNumberContainer = styled.View`
