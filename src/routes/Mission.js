@@ -6,6 +6,8 @@ import MissionListContainer from '../components/MissionListContainer';
 import MissionResultModal from '../components/MissionResultModal';
 import NewMissionModal from '../components/NewMissionModal';
 
+const GOAL_PERCENTAGE = 50;
+
 // 전체 화면
 const Screen = styled.View`
   background-color: #00ac84;
@@ -53,7 +55,7 @@ const GoalGraph = styled.View`
 // 퍼센트 바 진행도
 const GoalGraphPercent = styled.View`
   background-color: #FDD4C0;
-  width: 50%;
+  width: ${GOAL_PERCENTAGE}%;
   height: 100%;
   position: absolute;
   border-radius: 10px;
@@ -65,22 +67,27 @@ const GoalGraphPercent = styled.View`
 
 // 원 + 숫자 컨테이너
 const GoalPointContainer = styled.View`
-  /*background-color: black; */
-  width: 13%;
-  height: 40%;
+  /* background-color: black;
+  opacity: 0.3; */
+  width: 60px;
+  height: 90px;
   position: absolute;
-  right: 190px;
+  right: 0;
+  justify-content: center;
 `;
 
 const GoalNumberContainer = styled.View`
   background-color: #00BE92;
   width: 80%;
   height: 35%;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 12px;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
   `;
 
 const GoalNumberTitle = styled.Text`
@@ -89,15 +96,15 @@ const GoalNumberTitle = styled.Text`
   color: #ffffff;
 `;
 
-// 원 컨테이너
-const GoalPointCircleContainer = styled.View`
-  /* background-color: orange; */
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-`;
+// // 원 컨테이너
+// const GoalPointCircleContainer = styled.View`
+//   background-color: orange;
+//   width: 100%;
+//   height: 100%;
+//   justify-content: center;
+//   align-items: center;
+//   position: absolute;
+// `;
 
 const GoalPointCircle = styled.View`
   background-color: #ffffff;
@@ -170,17 +177,28 @@ export default function Mission() {
       </NameContainer>
 
       <GoalContainer>
-        <GoalGraph>        
-          <GoalGraphPercent/>
-        </GoalGraph>
-        <GoalPointContainer right={GoalGraphPercent}>
-          <GoalNumberContainer>
-            <GoalNumberTitle>93%</GoalNumberTitle>
-          </GoalNumberContainer>
-          <GoalPointCircleContainer>
-            <GoalPointCircle/>
-          </GoalPointCircleContainer>
+        <GoalGraph>
+          <GoalGraphPercent>
+            <GoalPointContainer>
+              <GoalNumberContainer>
+                <GoalNumberTitle>{GOAL_PERCENTAGE}%</GoalNumberTitle>
+              </GoalNumberContainer>
+              <GoalPointCircle />
+            </GoalPointContainer>
+          </GoalGraphPercent>
+          
+            {/* <GoalGraphPercent>
+              <GoalPointContainer right={GoalGraphPercent}>
+              <GoalNumberContainer>
+                <GoalNumberTitle>93%</GoalNumberTitle>
+              </GoalNumberContainer>
+              <GoalPointCircleContainer>
+                <GoalPointCircle/>
+              </GoalPointCircleContainer>
         </GoalPointContainer>
+            </GoalGraphPercent> */}
+        </GoalGraph>
+        
       </GoalContainer>
 
       <MissionContainer>
