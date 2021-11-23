@@ -96,16 +96,6 @@ const GoalNumberTitle = styled.Text`
   color: #ffffff;
 `;
 
-// // 원 컨테이너
-// const GoalPointCircleContainer = styled.View`
-//   background-color: orange;
-//   width: 100%;
-//   height: 100%;
-//   justify-content: center;
-//   align-items: center;
-//   position: absolute;
-// `;
-
 const GoalPointCircle = styled.View`
   background-color: #ffffff;
   width: 10px;
@@ -186,19 +176,7 @@ export default function Mission() {
               <GoalPointCircle />
             </GoalPointContainer>
           </GoalGraphPercent>
-          
-            {/* <GoalGraphPercent>
-              <GoalPointContainer right={GoalGraphPercent}>
-              <GoalNumberContainer>
-                <GoalNumberTitle>93%</GoalNumberTitle>
-              </GoalNumberContainer>
-              <GoalPointCircleContainer>
-                <GoalPointCircle/>
-              </GoalPointCircleContainer>
-        </GoalPointContainer>
-            </GoalGraphPercent> */}
         </GoalGraph>
-        
       </GoalContainer>
 
       <MissionContainer>
