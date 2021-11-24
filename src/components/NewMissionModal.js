@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'; 
-import { StyleSheet, Text, View, Modal, TouchableOpacity, Button} from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, Button } from 'react-native';
 import styled from 'styled-components/native';
 import { useFonts } from 'expo-font';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import axios from 'axios';
+import { API_URL } from '../../utils/API_URL';
 
 const closeButtonImage = require('../styles/images/icon/closeButton.png');
 const baby = require('../styles/images/icon/baby.png');
@@ -175,7 +177,7 @@ const SubmitText = styled.Text`
 `;
 
 
-export default function NewMissionModal({ visible, setVisible }) {
+export default function NewMissionModal({ childId, visible, setVisible }) {
   const [loaded] = useFonts({
     ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
     Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
@@ -196,8 +198,7 @@ export default function NewMissionModal({ visible, setVisible }) {
   // let month = today.getMonth() + 1;  // 월
   // let date = today.getDate();  // 날짜
   // let day = today.getDay();  // 요일
-
-
+  console.log(childId);
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -214,10 +215,28 @@ export default function NewMissionModal({ visible, setVisible }) {
     setMissionEndDate(date);
   };
 
-  const handleSubmit = () => {
+  // API_test 통신: 자녀 미션 추가
+  const handleSubmit = (missionEndDate, missionDetail, missionMoney) => {
+    let form = new FormData();
+    
     if (missionDetail && missionMoney && !isNaN(missionMoney)) {
-      alert('새로운 미션이 추가되었습니다!');
-      setVisible(false);
+      form.append('expDate', missionEndDate)
+      form.append('content', missionDetail)
+      form.append('reward', missionMoney)
+
+      // axios.post(
+      //   `${API_URL}/assignment/mission`, form)
+      //   .then((response) => {
+      //     console.log(response);
+      //     if (response.status == 200) {
+      //       alert('새로운 미션이 추가되었습니다!');
+      //       setVisible(false);
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   })
+
     } else if (isNaN(missionMoney)) {
       alert('보상 칸은 숫자만 입력해주세요.');
     } else if (missionMoney.length == 0) {

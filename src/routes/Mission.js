@@ -1,12 +1,16 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
 import MissionListContainer from '../components/MissionListContainer';
 import MissionResultModal from '../components/MissionResultModal';
 import NewMissionModal from '../components/NewMissionModal';
+import { API_URL } from '../../utils/API_URL';
+import { USER_TOKEN } from '../../utils/Token';
+import axios from 'axios';
+import { useIsFocused } from '@react-navigation/core';
 
-const GOAL_PERCENTAGE = 50;
+const GOAL_PERCENTAGE = 80;
 
 // 전체 화면
 const Screen = styled.View`
@@ -150,9 +154,30 @@ const PlusButtonTitle = styled.Text`
   font-size: 16px;
 `;
 
-export default function Mission() {
+export default function Mission({ id }) {
   const [resultModalVisible, setResultModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const isFocused = useIsFocused();
+  const childId = id;
+
+  useEffect(() => {
+    console.log(id);
+    console.log(typeof(id));
+    console.log(`${API_URL}/api/assignment/mission?childId=${id}`);
+    const AuthStr = `Token ${USER_TOKEN}`;
+    console.log(AuthStr);
+    async function getMissionList() {
+      axios.get(`${API_URL}/api/assignment/mission?childId=${id}`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
+
+    getMissionList();
+  }, [isFocused])
 
   const handleNewMission = () => {
     setModalVisible(true);
@@ -193,7 +218,7 @@ export default function Mission() {
       </MissionContainer>
 
       <MissionResultModal visible={resultModalVisible} setVisible={setResultModalVisible} />
-      <NewMissionModal visible={modalVisible} setVisible={setModalVisible} />
+      <NewMissionModal childId={id} visible={modalVisible} setVisible={setModalVisible} />
     </Screen>
   )
 }

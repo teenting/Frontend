@@ -1,9 +1,13 @@
 // 메인화면에서 자녀 계좌 보여줄 수 있는 탭
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
+import { useIsFocused } from '@react-navigation/core';
+import axios from 'axios';
+import { API_URL } from '../../utils/API_URL';
+import { USER_TOKEN } from '../../utils/Token';
 
 const rightArrow = require('../styles/images/icon/rightArrow.png');
 const unitWon = require('../styles/images/icon/unitWon.png');
@@ -101,7 +105,10 @@ const TransferTabImage = styled.Image`
 `;
 
 export default function ChildrenAccountTab() {
+  const [childBalance, setChildBalance] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [loaded] = useFonts({
     ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
     Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
@@ -109,32 +116,60 @@ export default function ChildrenAccountTab() {
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
 
+  useEffect(() => {
+    const AuthStr = `Token ${USER_TOKEN}`;
+    
+    async function getChildBalance() {
+      await axios.get(`${API_URL}/api/finance/balance/child`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setChildBalance(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => setIsLoading(false))
+    }
+
+    getChildBalance();
+  }, [isFocused])
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
   
   if (!loaded) {
     return null;
   }
 
   return (
-      <AccountTab onPress={() => {navigation.push('ChildTabScreen', { screen: 'ChildMain' })}}>
-        <ChildrenNameContainer>
-          <ChildrenName>민수</ChildrenName>
-        </ChildrenNameContainer>
-        <MoneyUnitContainer>
-          <MoneyUnitImage source={unitWon} />
-        </MoneyUnitContainer>
-        <ChildrenMoneyContainer>
-          <ChildrenMoney>
-            65,000
-          </ChildrenMoney>
-        </ChildrenMoneyContainer>
-        <TransferTabContainer>
-          <TransferTab onPress={() => navigation.push('Transfer')}>
-            <InnerTransferTabContainer>
-              <TransferTabText>송금하기</TransferTabText>
-              <TransferTabImage source={rightArrow}/>
-            </InnerTransferTabContainer>
-          </TransferTab>
-        </TransferTabContainer>
-      </AccountTab>
+    <>
+    {childBalance.map((child) => (
+      <AccountTab key={child.id} onPress={() => {navigation.push('ChildTabScreen', { childId: child.id, screen: 'ChildMain'})}}>
+      <ChildrenNameContainer>
+        <ChildrenName>{child.firstname}</ChildrenName>
+      </ChildrenNameContainer>
+      <MoneyUnitContainer>
+        <MoneyUnitImage source={unitWon} />
+      </MoneyUnitContainer>
+      <ChildrenMoneyContainer>
+        <ChildrenMoney>
+          {child.balance}
+        </ChildrenMoney>
+      </ChildrenMoneyContainer>
+      <TransferTabContainer>
+        <TransferTab onPress={() => navigation.push('Transfer', { childId: child.id, childname: child.firstname })}>
+          <InnerTransferTabContainer>
+            <TransferTabText>송금하기</TransferTabText>
+            <TransferTabImage source={rightArrow}/>
+          </InnerTransferTabContainer>
+        </TransferTab>
+      </TransferTabContainer>
+    </AccountTab>
+    ))}  
+    </>
   )
 }
