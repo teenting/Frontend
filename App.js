@@ -14,6 +14,7 @@ import Transfer from './src/routes/Transfer';
 import Login from './src/routes/Login';
 import MyAccountDetails from './src/routes/MyAccountDetails';
 import TransferSuccess from './src/routes/TransferSuccess';
+import LoadingPage from './src/routes/LoadingPage';
 
 const inactive_home = require('./src/styles/images/icon/home_gray.png');
 const inactive_mission = require('./src/styles/images/icon/mission_gray.png');
@@ -96,6 +97,8 @@ export default function App() {
               // cardStyle: { backgroundColor: 'white' }
             }}
           >
+            <Stack.Screen name="LoadingPage" component={LoadingPage} />
+            <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Login">{(props) => <Login {...props} login={login} setLogin={setLogin} />}</Stack.Screen>
           </Stack.Group>
         )}
