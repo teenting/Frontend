@@ -90,10 +90,10 @@ const AccountNumber = styled.Text`
   font-family: Helvetica;
 `;
 
-export default function MyAccountContainer({ children, ...rest }) {
+export default function ChildAccountContainer({ childId, children, ...rest }) {
   const navigation = useNavigation();
-  // const [userInfo, setUserInfo] = useState([]);
-  const [userBalance, setUserBalance] = useState([]);
+  const [childBalance, setChildBalance] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const isFocused = useIsFocused();
   const route = useRoute();
   const [loaded] = useFonts({
@@ -105,20 +105,33 @@ export default function MyAccountContainer({ children, ...rest }) {
 
   useEffect(() => {
     const AuthStr = `Token ${USER_TOKEN}`;
-    async function getUserBalance() {
-      await axios.get(`${API_URL}/api/finance/balance/`, { headers: { Authorization: AuthStr } })
+
+    async function getChildBalance() {
+      await axios.get(`${API_URL}/api/finance/balance/child`, { headers: { Authorization: AuthStr } })
       .then((response) => {
-        setUserBalance(response.data);
+        setChildBalance(response.data);
       })
       .catch((error) => {
         console.log(error);
       })
+      .finally(() => setIsLoading(false))
     }
 
-    // getUserData();
-    getUserBalance();
+    getChildBalance();
+
+    // const filteredUsage = childUsage.filter((info) => info.id == childId);
+
+
   }, [isFocused])
 
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
+  
   
   if (!loaded) {
     return null;
@@ -127,17 +140,17 @@ export default function MyAccountContainer({ children, ...rest }) {
   return (
     <MyAccountContainerBox {...rest} onPress={() => route.name == 'Main' ? navigation.navigate('MyAccountDetails') : null}>
       <MyAccountHeaderContainer>
-        <MyAccountTitle>내 계좌</MyAccountTitle>
+        <MyAccountTitle>{childBalance[childId - 1].firstname}의 계좌</MyAccountTitle>
         <RefreshImageContainer>
           <RefreshImage source={refresh} />
         </RefreshImageContainer>
       </MyAccountHeaderContainer>
       <MyMoneyContainer>
-        <MyMoney>{userBalance.balance}</MyMoney>
+        <MyMoney>{childBalance[childId - 1].balance}</MyMoney>
       </MyMoneyContainer>
       <MyAccountInfoContainer>
         <BankName>농협</BankName>
-        <AccountNumber>{userBalance.acno}</AccountNumber>
+        <AccountNumber>{childBalance[childId - 1].acno}</AccountNumber>
       </MyAccountInfoContainer>
     </MyAccountContainerBox>
   )

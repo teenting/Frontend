@@ -126,9 +126,8 @@ const TransferButtonImage = styled.Image`
   height: 15px;
 `;
 
-export default function Transfer() {
+export default function Transfer({ route }) {
   const [num, setNum] = useState('');
-  const [money, setMoney] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [loaded] = useFonts({
     ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
@@ -136,6 +135,9 @@ export default function Transfer() {
     Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
+
+  let id = route.params.childId;
+  let childName = route.params.childname;
 
   const handleNumClick = (number) => {
     setNum(num => num + number);
@@ -149,7 +151,7 @@ export default function Transfer() {
     if (num.length === 0) {
       alert('송금할 금액을 입력하세요!');
     } else {
-      setMoney(num);
+      setNum(num);
       setModalVisible(true);
     }
   };
@@ -173,7 +175,7 @@ export default function Transfer() {
       </MoneyInputContainer>
       <NumberPadContainer>
         { NumberList.map(({id, text}) => (
-          <NumberPad disabled={id === 11 && num.length === 0} keyboardType = 'numeric' onPress={() => handleNumClick(text)}>
+          <NumberPad key={id} disabled={id === 11 && num.length === 0} keyboardType = 'numeric' onPress={() => handleNumClick(text)}>
               <NumberText>{text}</NumberText>
           </NumberPad>
         )) }
@@ -189,7 +191,7 @@ export default function Transfer() {
       </SubmitButtonContainer>
 
         {/* 모달 화면 */}
-      <TransferPasswordModal visible={modalVisible} setVisible={setModalVisible} money={money}/>
+      <TransferPasswordModal childname={childName} childId={id} money={num} visible={modalVisible} setVisible={setModalVisible} />
     </Screen>
   )
 }

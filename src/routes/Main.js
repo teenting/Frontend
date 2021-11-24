@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
@@ -6,6 +6,10 @@ import MyAccountContainer from '../components/MyAccountContainer';
 import ChildrenAccountTab from '../components/ChildrenAccountTab';
 import RecentActivityTab from '../components/RecentActivityTab';
 import { useFonts } from 'expo-font';
+import { API_URL } from '../../utils/API_URL';
+import { USER_TOKEN } from '../../utils/Token';
+import axios from 'axios';
+import { useIsFocused } from '@react-navigation/native';
 
 const background = require('../styles/images/background.png');
 const logo = require('../styles/images/logo/logo_green_circle.png');
@@ -192,14 +196,13 @@ export default function Main() {
             </ButtonsContainer>
           </HeaderButtonsContainer>
         </Header>
+
         <MyAccountContainer />
         
         <ChildrenAccountContainer>
           <ChildrenAccoutTitle>자녀 관리</ChildrenAccoutTitle>
           <AccountContainer>
             <ScrollView horizontal={true} style={{width: 100, height: 180}}>
-              <ChildrenAccountTab />
-              <ChildrenAccountTab />
               <ChildrenAccountTab />
             </ScrollView>
           </AccountContainer>
@@ -211,8 +214,6 @@ export default function Main() {
           </RecentActivityTextContainer>
           <RecentActivityListContainer>
             <ScrollView >
-              <RecentActivityTab />
-              <RecentActivityTab />
               <RecentActivityTab />
             </ScrollView>
           </RecentActivityListContainer>

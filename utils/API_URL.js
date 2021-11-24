@@ -1,1 +1,1 @@
-export const API_URL = "https://teenting.com/api"
+export const API_URL = "http://3.37.91.87";
