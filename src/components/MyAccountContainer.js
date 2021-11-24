@@ -92,7 +92,6 @@ const AccountNumber = styled.Text`
 
 export default function MyAccountContainer({ children, ...rest }) {
   const navigation = useNavigation();
-  // const [userInfo, setUserInfo] = useState([]);
   const [userBalance, setUserBalance] = useState([]);
   const isFocused = useIsFocused();
   const route = useRoute();
@@ -111,11 +110,11 @@ export default function MyAccountContainer({ children, ...rest }) {
         setUserBalance(response.data);
       })
       .catch((error) => {
+        console.log("================MyAccountContainer===============");
         console.log(error);
       })
     }
 
-    // getUserData();
     getUserBalance();
   }, [isFocused])
 

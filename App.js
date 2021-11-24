@@ -29,7 +29,8 @@ const ChildTab = createBottomTabNavigator();
 
 function childrenTabScreen({ route }) {
   let childId = route.params.childId;
-  // console.log(route.params.childId);
+  let childName = route.params.childName;
+  let parentId = route.params.parentId;
 
   return (
       <ChildTab.Navigator
@@ -54,7 +55,7 @@ function childrenTabScreen({ route }) {
               <Image source={focused ? active_mission : inactive_mission} style={{width: 19, height: 19, overflow: 'visible'}}/>
             )
           }
-        }}>{(props) => <Mission {...props} id={childId} />}</ChildTab.Screen>
+        }}>{(props) => <Mission {...props} parentid={parentId} childname={childName} id={childId} />}</ChildTab.Screen>
 
         <ChildTab.Screen name="Analysis" options={{
           tabBarIcon: ({focused}) => {
@@ -68,7 +69,7 @@ function childrenTabScreen({ route }) {
 }
 
 export default function App() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
 
   return (
     <NavigationContainer>

@@ -110,6 +110,7 @@ export default function Login({ login, setLogin }) {
     axios.post(`${API_URL}/api/ttAccount/login`, form)
     .then((response) => {
       if (response.status == 200) {
+        console.log(response);
         alert(`Welcome to Teenting!`);
         setLogin(true);
       }

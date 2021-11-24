@@ -58,7 +58,7 @@ const MissionMoney = styled.Text`
   margin-top: 5px;
 `;
 
-export default function MissionList({ resultModalVisible, setResultModalVisible} ) {
+export default function MissionList({ missionData, resultModalVisible, setResultModalVisible} ) {
   return (
     <EachMissionContainer onPress={() => setResultModalVisible(true)}>
 
@@ -69,8 +69,8 @@ export default function MissionList({ resultModalVisible, setResultModalVisible}
       </MissionResultContainer>
 
       <MissionListContainer>
-        <MissionTitle>영어 숙제 하기</MissionTitle>
-        <MissionMoney>15000원</MissionMoney>
+        <MissionTitle>{missionData.content}</MissionTitle>
+        <MissionMoney>{missionData.reward}원</MissionMoney>
       </MissionListContainer>
 
     </EachMissionContainer>

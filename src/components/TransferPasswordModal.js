@@ -244,11 +244,11 @@ export default function TransferPasswordModal({ childname, childId, money, visib
         axios.post(`${API_URL}/api/finance/remittance?childId=${childId}`, form, { headers: { Authorization : AuthStr } })
         .then((response) => {
           console.log(response);
+          alert('송금 성공!');
         })
         .catch((error) => {
           console.log(error);
         })
-        alert('송금 성공!');
       } else {
         alert('비밀번호가 틀렸습니다.')
       }

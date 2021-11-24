@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const EachUsageContainer = styled.View`
   /* background-color: blue; */
   width: 100%;
-  height: 28%;
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: center;
