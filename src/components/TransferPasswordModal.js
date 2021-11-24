@@ -3,6 +3,9 @@ import { StyleSheet, Text, Modal, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { useFonts } from 'expo-font';
 import TransferSuccess from '../routes/TransferSuccess';
+import axios from 'axios';
+import { API_URL } from '../../utils/API_URL';
+import { USER_TOKEN } from '../../utils/Token';
 
 const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0' ];
 const testPassword = 123456;
@@ -204,7 +207,7 @@ const PasswordCheck = styled.Text`
 `;
 
 
-export default function TransferPasswordModal({ visible, setVisible, money }) {
+export default function TransferPasswordModal({ childname, childId, money, visible, setVisible }) {
   const [passNum, setPassNum] = useState(0);
   const [loaded] = useFonts({
     ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
@@ -214,8 +217,12 @@ export default function TransferPasswordModal({ visible, setVisible, money }) {
   });
 
   const transferringMoney = Number(money);
+  
+
 
   const handleInput = (number) => {
+    let form = new FormData();
+    const AuthStr = `Token ${USER_TOKEN}`;
     Password.push(Number(number));
     PasswordBubbleList[passNum].active = true;
     setPassNum(passNum => passNum >= 5 ? passNum = 5 : passNum + 1);
@@ -232,6 +239,15 @@ export default function TransferPasswordModal({ visible, setVisible, money }) {
       PasswordBubbleList[4].active = false;
       PasswordBubbleList[5].active = false;
       if (numPassword === testPassword) {
+        form.append('tram', transferringMoney);
+
+        axios.post(`${API_URL}/api/finance/remittance?childId=${childId}`, form, { headers: { Authorization : AuthStr } })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
         alert('송금 성공!');
       } else {
         alert('비밀번호가 틀렸습니다.')
@@ -298,7 +314,7 @@ export default function TransferPasswordModal({ visible, setVisible, money }) {
               </PasswordBubble>
             </PasswordBubbleContainer>
             <TransferedMoneyContainer>
-              <TransferedMoney>민수에게 {transferringMoney}원을 송금합니다.</TransferedMoney>
+              <TransferedMoney>{childname}에게 {transferringMoney}원을 송금합니다.</TransferedMoney>
             </TransferedMoneyContainer>
           </PasswordInfoContainer>
           

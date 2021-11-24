@@ -1,10 +1,14 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
 import MyAccountContainer from '../components/MyAccountContainer';
 import UsageBox from '../components/UsageBox';
 import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '../../utils/API_URL';
+import { USER_TOKEN } from '../../utils/Token';
+import axios from 'axios';
+import { useIsFocused } from '@react-navigation/core';
 
 const refresh = require('../styles/images/icon/refresh.png')
 
@@ -89,7 +93,7 @@ const ButtonTitle = styled.Text`
 `;
 
 // 사용 내역 컨테이너
-const UsageContationer = styled.View`
+const UsageContainer = styled.View`
   /* background-color: blue; */
   width: 100%;
   height: 55%;
@@ -116,7 +120,6 @@ const UsageListContainer = styled.View`
   width: 100%;
   height: 95%;
   align-items: center;
-  justify-content: center;
   padding: 5px 0px;
 `;
 
@@ -124,13 +127,37 @@ const UsageListContainer = styled.View`
 const UsageList = styled.View`
   background-color: white;
   width: 90%;
-  height: 100%;
+  height: 90%;
   border-radius: 20px;
   padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Footer = styled.View`
+  background-color: thistle;
+  width: 100%;
 `;
 
 export default function MyAccountDetails() {
   const navigation = useNavigation();
+  const [usageData, setUsageData] = useState([]);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    const AuthStr = `Token ${USER_TOKEN}`;
+    async function getUsageData() {
+      axios.get(`${API_URL}/api/finance/transaction`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setUsageData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
+
+    getUsageData();
+  }, [isFocused])
 
   return (
     <Screen>
@@ -152,17 +179,22 @@ export default function MyAccountDetails() {
       </OuterAccountContainer>
       <MyAccountContainer marginTop='33%'/>
       
-      <UsageContationer>
+      <UsageContainer>
         <UsageTitleContainer>
           <UsageTitle>사용 내역</UsageTitle>
         </UsageTitleContainer>
 
         <UsageListContainer>
           <UsageList>
-            <UsageBox />
+            <ScrollView style={{ flexGrow:0 }}>
+              {usageData.map((data, index) => (
+                <UsageBox key={index} data={data} />
+              ))}
+            </ScrollView>
+            <Footer />
           </UsageList>
         </UsageListContainer>
-      </UsageContationer>
+      </UsageContainer>
     </Screen>
   )
 }

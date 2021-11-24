@@ -1,6 +1,8 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
+import { API_URL } from '../../utils/API_URL';
+import axios from 'axios';
 
 const loginbackground = require('../styles/images/loginbackground.png');
 const logo = require('../styles/images/logo/logo_white_square.png');
@@ -49,7 +51,7 @@ const ID = styled.TextInput`
 const Password = styled(ID)``;
 
 // 버튼
-const LoginButtonContainer = styled.TouchableOpacity`
+const LoginButtonContainer = styled.View`
   /* background-color: #DEB3CF; */
   width: 100%;
   height: 25%;
@@ -58,7 +60,7 @@ const LoginButtonContainer = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const LoginButton = styled.View`
+const LoginButton = styled.TouchableOpacity`
   background-color: #00ac84;
   width: 80%;
   height: 22%;
@@ -96,7 +98,32 @@ const styles = StyleSheet.create({
   }
 });
   
-export default function Login() {
+export default function Login({ login, setLogin }) {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    let form = new FormData();
+    form.append('username', id);
+    form.append('password', password);
+
+    axios.post(`${API_URL}/api/ttAccount/login`, form)
+    .then((response) => {
+      if (response.status == 200) {
+        alert(`Welcome to Teenting!`);
+        setLogin(true);
+      }
+    }) 
+    .catch((error) => {
+      if (error.response.status == 400) {
+        alert('Wrong Username or Password:(');
+      } else {
+        alert (`error ${error.response.status}`)
+        console.log(error)
+      }
+    })
+  }
+
   return (
     <Screen>
       <ImageBackground source={loginbackground} resizeMode="cover" style={styles.image}>
@@ -105,12 +132,12 @@ export default function Login() {
         </LogoImageContainer>
 
         <LoginContainer>
-          <ID placeholder="spongebob1123"/>
-          <Password placeholder="Password please!"/>
+          <ID value={id} onChangeText={setId} placeholder="teenting1123"/>
+          <Password secureTextEntry={true} value={password} onChangeText={setPassword} placeholder="Password please!"/>
         </LoginContainer>
 
         <LoginButtonContainer>
-          <LoginButton>
+          <LoginButton onPress={() => handleLogin()}>
             <LoginButtonTitle>시작하기</LoginButtonTitle>
           </LoginButton>
         </LoginButtonContainer>

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const EachUsageContainer = styled.View`
   /* background-color: blue; */
   width: 100%;
-  height: 15%;
+  height: 28%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -65,7 +65,7 @@ const UsageInfoPay = styled.Text`
 
 
 
-export default function UsageBox(data) {
+export default function ChildUsageBox({ childUsageData }) {
 
   return (
     <EachUsageContainer>
@@ -73,11 +73,11 @@ export default function UsageBox(data) {
         <UsageInfoPhoto/>
       </UsageInfoPhotoContainer>
       <UsageInfoContainer>
-        <UsageInfoText>{data.data.bnprCntn}</UsageInfoText>
+        <UsageInfoText>{childUsageData.bnprCntn}</UsageInfoText>
         <UsageInfoBank>농협은행</UsageInfoBank>
       </UsageInfoContainer>
       <UsageInfoPayContainter>
-        <UsageInfoPay>+{data.data.tram}원</UsageInfoPay>
+        <UsageInfoPay>+{childUsageData.tram}원</UsageInfoPay>
       </UsageInfoPayContainter>
     </EachUsageContainer>
   )

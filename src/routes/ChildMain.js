@@ -1,10 +1,14 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
-import MyAccountContainer from '../components/MyAccountContainer';
-import UsageBox from '../components/UsageBox';
+import ChildAccountContainer from '../components/ChildAccountContainer';
+import ChildUsageBox from '../components/ChildUsageBox';
 import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '../../utils/API_URL';
+import { USER_TOKEN } from '../../utils/Token';
+import axios from 'axios';
+import { useIsFocused } from '@react-navigation/core';
 
 const refresh = require('../styles/images/icon/refresh.png')
 
@@ -127,12 +131,34 @@ const UsageList = styled.View`
   height: 100%;
   border-radius: 20px;
   padding-top: 10px;
+  border-radius: 20px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
 `;
 
 
 
-export default function ChildMain() {
+export default function ChildMain({ id }) {
+  const [childUsage, setChildUsage] = useState([]);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    const AuthStr = `Token ${USER_TOKEN}`;
+
+    async function getChildUsage() {
+      axios.get(`${API_URL}/api/finance/transaction?childId=${id}`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setChildUsage(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
+    
+    getChildUsage();
+  }, [isFocused])
 
   return (
     <Screen>
@@ -152,7 +178,7 @@ export default function ChildMain() {
           </LimitButton>
         </ButtonsContainer>
       </OuterAccountContainer>
-      <MyAccountContainer marginTop='33%'/>
+      <ChildAccountContainer childId={id} marginTop='33%'/>
       
       <UsageContationer>
         <UsageTitleContainer>
@@ -161,7 +187,11 @@ export default function ChildMain() {
 
         <UsageListContainer>
           <UsageList>
-            <UsageBox />
+            <ScrollView>
+              {childUsage.map((data, index) => (
+                <ChildUsageBox key={index} childUsageData={data} />
+              ))}
+            </ScrollView>
           </UsageList>
         </UsageListContainer>
       </UsageContationer>

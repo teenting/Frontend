@@ -27,7 +27,10 @@ const active_graph = require('./src/styles/images/icon/graph_green.png');
 const Stack = createNativeStackNavigator();
 const ChildTab = createBottomTabNavigator();
 
-function childrenTabScreen() {
+function childrenTabScreen({ route }) {
+  let childId = route.params.childId;
+  // console.log(route.params.childId);
+
   return (
       <ChildTab.Navigator
         screenOptions={{
@@ -37,33 +40,35 @@ function childrenTabScreen() {
         // cardStyle: { backgroundColor: 'white' }
         }}
       >
-        <ChildTab.Screen name="ChildMain" component={ChildMain} options={{
+        <ChildTab.Screen name="ChildMain" options={{
           tabBarIcon: ({focused}) => {
             return (
               <Image source={focused ? active_home : inactive_home} style={{width: 20, height: 20, overflow: 'visible'}}/>
             )
           }
-        }}/>
-        <ChildTab.Screen name="Mission" component={Mission} options={{
+        }}>{(props) => <ChildMain {...props} id={childId} />}</ChildTab.Screen>
+
+        <ChildTab.Screen name="Mission" options={{
           tabBarIcon: ({focused}) => {
             return (
               <Image source={focused ? active_mission : inactive_mission} style={{width: 19, height: 19, overflow: 'visible'}}/>
             )
           }
-        }}/>
-        <ChildTab.Screen name="Analysis" component={Analysis} options={{
+        }}>{(props) => <Mission {...props} id={childId} />}</ChildTab.Screen>
+
+        <ChildTab.Screen name="Analysis" options={{
           tabBarIcon: ({focused}) => {
             return (
               <Image source={focused ? active_graph : inactive_graph} style={{width: 16, height: 16, overflow: 'visible'}}/>
             )
           }
-        }}/>
+        }}>{(props) => <Analysis {...props} id={childId} />}</ChildTab.Screen>
       </ChildTab.Navigator>
   )
 }
 
 export default function App() {
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
 
   return (
     <NavigationContainer>
@@ -94,18 +99,9 @@ export default function App() {
           >
             <Stack.Screen name="LoadingPage" component={LoadingPage} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Login">{(props) => <Login {...props} login={login} setLogin={setLogin} />}</Stack.Screen>
           </Stack.Group>
         )}
-        {/* <Stack.Group
-          screenOptions={{
-            headerShown: false,
-            // cardStyle: { backgroundColor: 'white' }
-          }}
-        >
-          <ChildStack.Screen name="ChildMain" component={ChildMain} />
-          <ChildStack.Screen name="Mission" component={Mission} />
-          <ChildStack.Screen name="Analysis" component={Analysis} />
-        </Stack.Group> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
