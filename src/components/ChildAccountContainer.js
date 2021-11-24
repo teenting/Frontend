@@ -112,14 +112,13 @@ export default function ChildAccountContainer({ childId, children, ...rest }) {
         setChildBalance(response.data);
       })
       .catch((error) => {
+        console.log("================ChildAccountContainer===============")
         console.log(error);
       })
       .finally(() => setIsLoading(false))
     }
 
     getChildBalance();
-
-    // const filteredUsage = childUsage.filter((info) => info.id == childId);
 
 
   }, [isFocused])

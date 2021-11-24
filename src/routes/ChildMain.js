@@ -153,6 +153,7 @@ export default function ChildMain({ id }) {
         setChildUsage(response.data);
       })
       .catch((error) => {
+        console.log("================CHildMain===============")
         console.log(error);
       })
     }

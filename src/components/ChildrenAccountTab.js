@@ -125,6 +125,7 @@ export default function ChildrenAccountTab() {
         setChildBalance(response.data);
       })
       .catch((error) => {
+        console.log("================ChildAccountTab===============");
         console.log(error);
       })
       .finally(() => setIsLoading(false))
@@ -148,7 +149,7 @@ export default function ChildrenAccountTab() {
   return (
     <>
     {childBalance.map((child) => (
-      <AccountTab key={child.id} onPress={() => {navigation.push('ChildTabScreen', { childId: child.id, screen: 'ChildMain'})}}>
+      <AccountTab key={child.id} onPress={() => {navigation.push('ChildTabScreen', { parentId: child.parent, childId: child.id, childName: child.firstname, screen: 'ChildMain'})}}>
       <ChildrenNameContainer>
         <ChildrenName>{child.firstname}</ChildrenName>
       </ChildrenNameContainer>

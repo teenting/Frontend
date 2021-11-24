@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
 import MissionListContainer from '../components/MissionListContainer';
@@ -154,22 +154,19 @@ const PlusButtonTitle = styled.Text`
   font-size: 16px;
 `;
 
-export default function Mission({ id }) {
+export default function Mission({ parentid, childname, id }) {
   const [resultModalVisible, setResultModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [missionData, setMissionData] = useState([]);
   const isFocused = useIsFocused();
-  const childId = id;
+
 
   useEffect(() => {
-    console.log(id);
-    console.log(typeof(id));
-    console.log(`${API_URL}/api/assignment/mission?childId=${id}`);
-    const AuthStr = `Token ${USER_TOKEN}`;
-    console.log(AuthStr);
     async function getMissionList() {
-      axios.get(`${API_URL}/api/assignment/mission?childId=${id}`, { headers: { Authorization: AuthStr } })
+      const AuthStr = `Token ${USER_TOKEN}`;
+      axios.get(`${API_URL}/api/assignment/mission/?childId=${id}`, { headers: { Authorization: AuthStr } })
       .then((response) => {
-        console.log(response);
+        setMissionData(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -178,6 +175,21 @@ export default function Mission({ id }) {
 
     getMissionList();
   }, [isFocused])
+
+  useEffect(() => {
+    async function getMissionList() {
+      const AuthStr = `Token ${USER_TOKEN}`;
+      axios.get(`${API_URL}/api/assignment/mission/?childId=${id}`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setMissionData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
+
+    getMissionList();
+  }, [modalVisible])
 
   const handleNewMission = () => {
     setModalVisible(true);
@@ -188,7 +200,7 @@ export default function Mission({ id }) {
       <BackButtonHeader/>
 
       <NameContainer>
-        <NameTitle>민수</NameTitle>
+        <NameTitle>{childname}</NameTitle>
       </NameContainer>
 
       <GoalContainer>
@@ -206,9 +218,11 @@ export default function Mission({ id }) {
 
       <MissionContainer>
         <MissionModal>
-          <MissionListContainer resultModalVisible={resultModalVisible} setResultModalVisible={setResultModalVisible}/>
-          <MissionListContainer/>
-          <MissionListContainer/>
+          <ScrollView>
+          { missionData.map((mission, index) => (
+            <MissionListContainer key={index} missionData={mission} resultModalVisible={resultModalVisible} setResultModalVisible={setResultModalVisible}/>
+          )) }
+          </ScrollView>
         </MissionModal>
         <PlusButtonContainer>
           <PlusButton onPress={() => handleNewMission()}>
@@ -218,7 +232,7 @@ export default function Mission({ id }) {
       </MissionContainer>
 
       <MissionResultModal visible={resultModalVisible} setVisible={setResultModalVisible} />
-      <NewMissionModal childId={id} visible={modalVisible} setVisible={setModalVisible} />
+      <NewMissionModal parentId={parentid} childName={childname} childId={id} visible={modalVisible} setVisible={setModalVisible} />
     </Screen>
   )
 }

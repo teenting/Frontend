@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
 import CategoryContainer from '../components/CategoryContainer';
 import { useFonts } from 'expo-font';
+import { useIsFocused } from '@react-navigation/core';
+import { API_URL } from '../../utils/API_URL';
+import { USER_TOKEN } from '../../utils/Token';
+import axios from 'axios';
 
 const DateList = [
   {
     id: 0,
     value: '1년',
+    period: 'annual'
   },
   {
     id: 1,
     value: '6개월',
-  }, {
+    period: 'semiannual'
+  },
+  {
     id: 2,
     value: '1개월',
-  }, {
+    period: 'month'
+  }, 
+  {
     id: 3,
     value: '1주',
+    period: 'week'
   }
 ]
 
@@ -149,14 +159,63 @@ const CategoryTitle = styled.Text`
   font-family: Helvetica_Bold;
 `;
 
-export default function Analysis() {
+export default function Analysis({ id }) {
   const [clicked, setClicked] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [period, setPeriod] = useState('week');
+  const [analysisData, setAnalysisData] = useState([]);
+  const isFocused = useIsFocused();
   const [loaded] = useFonts({
     ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
     Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
     Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
+
+
+  useEffect(() => {
+    const AuthStr = `Token ${USER_TOKEN}`;
+    
+    async function getAnalysis() {
+      await axios.get(`${API_URL}/api/finance/analysis?childId=${id}&period=${period}`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setAnalysisData(response.data);
+      })
+      .catch((error) => {
+        console.log("================getAnalysis===============");
+        console.log(error);
+      })
+      .finally(() => setIsLoading(false));
+    }
+
+    getAnalysis();
+  }, [isFocused])
+
+  useEffect(() => {
+    const AuthStr = `Token ${USER_TOKEN}`;
+    
+    async function getAnalysis() {
+      await axios.get(`${API_URL}/api/finance/analysis?childId=${id}&period=${period}`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setAnalysisData(response.data);
+      })
+      .catch((error) => {
+        console.log("================getAnalysis===============");
+        console.log(error);
+      })
+      .finally(() => setIsLoading(false));
+    }
+
+    getAnalysis();
+  }, [period])
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
 
   if (!loaded) {
     return null;
@@ -170,8 +229,11 @@ export default function Analysis() {
       <BackButtonHeader />
       
       <DateScrollContainer>
-        { DateList.map(({id, value}) => (
-          <DateScrollButton active={clicked === id} onPress={() => setClicked(id)}>
+        { DateList.map(({id, value, period}) => (
+          <DateScrollButton active={clicked === id} onPress={() => {
+            setClicked(id);
+            setPeriod(period);
+            }}>
             <DateScrollText active={clicked === id}>{value}</DateScrollText>
           </DateScrollButton>
         )) }
@@ -183,7 +245,7 @@ export default function Analysis() {
         <UsageCircle source={greencircle} />
         <WholeUsageInnerContainer>
           <WholeUsageInnerText>총 지출</WholeUsageInnerText>
-          <WholeUsageInnerMoney>12,300</WholeUsageInnerMoney>
+          <WholeUsageInnerMoney>{analysisData.total}</WholeUsageInnerMoney>
           <WholeUsageInnerText width={'30'}>원</WholeUsageInnerText>
         </WholeUsageInnerContainer>
       </WholeUsageViewContainer>
@@ -191,7 +253,7 @@ export default function Analysis() {
         <CategoryTitleContainer>
           <CategoryTitle>카테고리별</CategoryTitle>
         </CategoryTitleContainer>
-        <CategoryContainer />
+        <CategoryContainer data={analysisData} />
       </OuterCategoryContainer>
     </Screen>
   )
