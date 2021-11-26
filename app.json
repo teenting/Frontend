@@ -21,7 +21,8 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.Wangsimlion.TeenTingProject"
     },
     "web": {}
   }
