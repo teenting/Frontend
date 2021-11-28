@@ -7,7 +7,7 @@ import axios from 'axios';
 import { API_URL } from '../../utils/API_URL';
 import { USER_TOKEN } from '../../utils/Token';
 
-const NumberList = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0' ];
+const NumberList = [ {id: 1, text: '1'}, {id: 2, text: '2'}, {id: 3, text: '3'}, {id: 4, text: '4'}, {id: 5, text: '5'}, {id: 6, text: '6'}, {id: 7, text: '7'}, {id: 8, text: '8'}, {id: 9, text: '9'}, {id: 10, text: ''}, {id: 11, text: '0'} ];
 const testPassword = 123456;
 const Password = [];
 let PasswordBubbleList = [
@@ -321,9 +321,9 @@ export default function TransferPasswordModal({ childname, childId, money, visib
           {/* 모달 비밀번호 키패드 */}
           <KeyPadContainer>
             <KeyPad>
-            { NumberList.map((number) => (
-                <NumberPad onPress={() => handleInput(number)}>
-                  <NumberText>{number}</NumberText>
+            { NumberList.map((id, text) => (
+                <NumberPad key={id} onPress={() => handleInput(text)}>
+                  <NumberText>{text}</NumberText>
                 </NumberPad>
             ) )}
               <NumberPad onPress={() => {

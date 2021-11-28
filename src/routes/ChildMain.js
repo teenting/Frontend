@@ -120,7 +120,7 @@ const UsageListContainer = styled.View`
   width: 100%;
   height: 95%;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   padding: 5px 0px;
 `;
 
@@ -128,18 +128,17 @@ const UsageListContainer = styled.View`
 const UsageList = styled.View`
   background-color: white;
   width: 90%;
-  height: 100%;
-  border-radius: 20px;
-  padding-top: 10px;
-  border-radius: 20px;
-  padding-top: 10px;
+  height: 90%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding-top: 8px;
   display: flex;
   flex-direction: column;
 `;
 
 
 
-export default function ChildMain({ id }) {
+export default function ChildMain({ parentid, childname, id}) {
   const [childUsage, setChildUsage] = useState([]);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -171,7 +170,7 @@ export default function ChildMain({ id }) {
       
       <OuterAccountContainer>
         <ButtonsContainer>
-          <TransferButton onPress={() => navigation.push('Transfer')}>
+          <TransferButton onPress={() => navigation.push('Transfer', { childId: id, childname: childname })}>
             <ButtonTitle>송금 하기</ButtonTitle>
           </TransferButton>
           <LimitButton>

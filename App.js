@@ -47,7 +47,7 @@ function childrenTabScreen({ route }) {
               <Image source={focused ? active_home : inactive_home} style={{width: 20, height: 20, overflow: 'visible'}}/>
             )
           }
-        }}>{(props) => <ChildMain {...props} id={childId} />}</ChildTab.Screen>
+        }}>{(props) => <ChildMain {...props} parentid={parentId} childname={childName} id={childId} />}</ChildTab.Screen>
 
         <ChildTab.Screen name="Mission" options={{
           tabBarIcon: ({focused}) => {

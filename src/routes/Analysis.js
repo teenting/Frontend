@@ -13,22 +13,22 @@ const DateList = [
   {
     id: 0,
     value: '1년',
-    period: 'annual'
+    period: 'annual',
   },
   {
     id: 1,
     value: '6개월',
-    period: 'semiannual'
+    period: 'semiannual',
   },
   {
     id: 2,
     value: '1개월',
-    period: 'month'
+    period: 'month',
   }, 
   {
     id: 3,
     value: '1주',
-    period: 'week'
+    period: 'week',
   }
 ]
 
@@ -160,7 +160,7 @@ const CategoryTitle = styled.Text`
 `;
 
 export default function Analysis({ id }) {
-  const [clicked, setClicked] = useState(0);
+  const [clicked, setClicked] = useState(3);
   const [isLoading, setIsLoading] = useState(true);
   const [period, setPeriod] = useState('week');
   const [analysisData, setAnalysisData] = useState([]);
@@ -171,9 +171,60 @@ export default function Analysis({ id }) {
     Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
+  
+  let today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const date = today.getDate();
+
+  let lastYear = today.getFullYear();
+  let lastMonth = today.getMonth() + 1;
+  let lastDate = today.getDate() - 7;
+
+  const [changeYear, setChangeYear] = useState(lastYear);
+  const [changeMonth, setChangeMonth] = useState(lastMonth);
+  const [changeDate, setChangeDate] = useState(lastDate);
+
+
+  const handleDate = (id) => {
+    if (id == 0) {
+      lastYear = new Date(today);
+      lastYear.setFullYear(today.getFullYear() - 2);
+      lastYear = lastYear.getFullYear();
+      setChangeYear(lastYear);
+      setChangeMonth(today.getMonth() + 1);
+      setChangeDate(today.getDate());
+    } else if (id == 1) {
+      lastMonth = new Date(today);
+      lastMonth.setMonth(today.getMonth() - 5);
+      lastMonth = lastMonth.getMonth();
+      setChangeMonth(lastMonth);
+      setChangeYear(today.getFullYear());
+      setChangeDate(today.getDate());
+    } else if (id == 2) {
+      lastMonth = new Date(today);
+      lastMonth.setMonth(today.getMonth());
+      lastMonth = lastMonth.getMonth();
+      setChangeMonth(lastMonth);
+      setChangeYear(today.getFullYear());
+      setChangeDate(today.getDate());
+    } else {
+      lastDate = new Date(today);
+      lastDate.setDate(today.getDate() - 7);
+      lastDate = lastDate.getDate();
+      setChangeDate(lastDate);
+      setChangeYear(today.getFullYear());
+      setChangeMonth(today.getMonth() + 1);
+    }
+  }
 
 
   useEffect(() => {
+    setPeriod('week');
+    setClicked(3);
+    lastYear = today.getFullYear();
+    lastMonth = today.getMonth() + 1;
+    lastDate = today.getDate() - 7;
     const AuthStr = `Token ${USER_TOKEN}`;
     
     async function getAnalysis() {
@@ -217,8 +268,10 @@ export default function Analysis({ id }) {
     )
   }
 
-  if (!loaded) {
-    return null;
+  if (isLoading) {
+    return (
+      <ActivityIndicator color="#00ac84"/>
+    )
   }
 
   return (
@@ -230,16 +283,17 @@ export default function Analysis({ id }) {
       
       <DateScrollContainer>
         { DateList.map(({id, value, period}) => (
-          <DateScrollButton active={clicked === id} onPress={() => {
+          <DateScrollButton key={id} active={clicked === id} onPress={() => {
             setClicked(id);
             setPeriod(period);
+            handleDate(id);
             }}>
             <DateScrollText active={clicked === id}>{value}</DateScrollText>
           </DateScrollButton>
         )) }
       </DateScrollContainer>
       <DateContainer>
-        <DateText>2021.03.01 - 2021.04.01</DateText>
+        <DateText>{changeYear}.{changeMonth}.{changeDate} - {year}.{month}.{date}</DateText>
       </DateContainer>
       <WholeUsageViewContainer>
         <UsageCircle source={greencircle} />

@@ -118,6 +118,15 @@ const MissionContainer = styled.View`
   bottom: 0;
 `;
 
+const MissionScroll = styled.ScrollView`
+`;
+
+const Footer = styled.View`
+  /* background-color: wheat; */
+  width: 100%;
+  height: 65px;
+`;
+
 const MissionModal = styled.View`
   background-color: #ffffff;
   width: 100%;
@@ -172,7 +181,6 @@ export default function Mission({ parentid, childname, id }) {
         console.log(error);
       })
     }
-
     getMissionList();
   }, [isFocused])
 
@@ -218,11 +226,19 @@ export default function Mission({ parentid, childname, id }) {
 
       <MissionContainer>
         <MissionModal>
-          <ScrollView>
-          { missionData.map((mission, index) => (
-            <MissionListContainer key={index} missionData={mission} resultModalVisible={resultModalVisible} setResultModalVisible={setResultModalVisible}/>
+          <MissionScroll>
+          { missionData.reverse().map((mission) => (
+            <MissionListContainer
+              childname={childname}
+              key={mission.id}
+              missionId={mission.id}
+              mission={mission}
+              resultModalVisible={resultModalVisible}
+              setResultModalVisible={setResultModalVisible}>
+            </MissionListContainer>
           )) }
-          </ScrollView>
+          </MissionScroll>
+          <Footer />
         </MissionModal>
         <PlusButtonContainer>
           <PlusButton onPress={() => handleNewMission()}>
@@ -231,7 +247,7 @@ export default function Mission({ parentid, childname, id }) {
         </PlusButtonContainer>
       </MissionContainer>
 
-      <MissionResultModal visible={resultModalVisible} setVisible={setResultModalVisible} />
+      
       <NewMissionModal parentId={parentid} childName={childname} childId={id} visible={modalVisible} setVisible={setModalVisible} />
     </Screen>
   )

@@ -1,7 +1,11 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { useFonts } from 'expo-font';
+import { USER_TOKEN } from '../../utils/Token';
+import { API_URL } from '../../utils/API_URL';
+import axios from 'axios';
+
 
 const closeButtonImage = require('../styles/images/icon/closeButton.png');
 const baby = require('../styles/images/icon/baby.png');
@@ -108,10 +112,17 @@ const MissionCustomTitle = styled.Text`
 `;
 
 // 제목에 맞는 내용
-const PickedContainer = styled.View`
+const TextContainer = styled.View`
   /* background-color: turquoise; */
   width: 60%;
   height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ContentText = styled.Text`
+  font-size: 15px;
+  color: #404040;
 `;
 
 // 추가 용돈 컨테이너
@@ -181,13 +192,30 @@ const ButtonText = styled.Text`
 
 
 
-export default function MissionResultModal({ visible, setVisible }) {
+export default function MissionResultModal({ childname, content, missionId, contentData, visible, setVisible }) {
+  const [statusUpdate, setStatusUpdate] = useState(false);
+  const [missionContent, setMissionContent] = useState({});
   const [loaded] = useFonts({
     ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
     Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
     Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
+
+  console.log('******************');
+  console.log("content", contentData.content);
+
+
+  const handleStatusUpdate = (statusNum) => {
+    console.log(missionId);
+    let form = new FormData();
+    form.append('status', statusNum);
+    const AuthStr = `Token ${USER_TOKEN}`;
+    axios.put(`${API_URL}/api/assignment/mission/${missionId}/`, form, { headers : { Authorization: AuthStr }})
+    .then((response) => {
+      setVisible(false);
+    })
+  }
 
   if (!loaded) {
     return null;
@@ -204,14 +232,17 @@ export default function MissionResultModal({ visible, setVisible }) {
         <ModalContainer>
           <ModalMain>
             <ModalHeader>
-                <TouchableOpacity onPress={() => setVisible(false)}>
+                <TouchableOpacity onPress={() => {
+                  console.log('What;s in the modal');
+                  console.log(content);
+                }}>
                   <CloseButton source={closeButtonImage} />
                 </TouchableOpacity>
             </ModalHeader>
 
             <ModalProfileContainer>
               <ModalProfileImage />
-              <ModalProfileText>엄마가 민수에게</ModalProfileText>
+              <ModalProfileText>엄마가 {childname}에게</ModalProfileText>
             </ModalProfileContainer>
 
             <MissionDetailContainer>
@@ -220,28 +251,32 @@ export default function MissionResultModal({ visible, setVisible }) {
                   <MissionCustomImage source={mission} />
                   <MissionCustomTitle>미션내용</MissionCustomTitle>
                 </MissionCustomTitleContainer>
-                <PickedContainer></PickedContainer>
+                <TextContainer>
+                  <ContentText>{contentData.content}</ContentText>
+                </TextContainer>
               </EachMissionDetailContainer>
               <EachMissionDetailContainer>
                 <MissionCustomTitleContainer>
                   <MissionCustomImage source={clock} />
                   <MissionCustomTitle>마감일</MissionCustomTitle>
                 </MissionCustomTitleContainer>
-                <PickedContainer></PickedContainer>
+                <TextContainer>
+                  <ContentText>{contentData.expDate.substr(0, 10)}</ContentText>
+                </TextContainer>
               </EachMissionDetailContainer>
               <ResultMoneyContainer>
                 <ResultMoneyImage source={money_green} />
                 <ResultMoneyText>추가용돈</ResultMoneyText>
-                <ResultMoney>1500</ResultMoney>
+                <ResultMoney>{contentData.reward}</ResultMoney>
                 <ResultMoneyText>원</ResultMoneyText>
               </ResultMoneyContainer>
             </MissionDetailContainer>
 
             <ResultButtonContainer>
-              <SuccessButton>
+              <SuccessButton onPress={() => handleStatusUpdate(1)}>
                 <ButtonText>성공</ButtonText>
               </SuccessButton>
-              <FailureButton>
+              <FailureButton onPress={() => handleStatusUpdate(0)}>
                 <ButtonText>실패</ButtonText>
               </FailureButton>
             </ResultButtonContainer>

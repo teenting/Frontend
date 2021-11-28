@@ -93,6 +93,7 @@ const AccountNumber = styled.Text`
 export default function MyAccountContainer({ children, ...rest }) {
   const navigation = useNavigation();
   const [userBalance, setUserBalance] = useState([]);
+  const [update, setUpdate] = useState(false);
   const isFocused = useIsFocused();
   const route = useRoute();
   const [loaded] = useFonts({
@@ -101,6 +102,10 @@ export default function MyAccountContainer({ children, ...rest }) {
     Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
+
+  const handleRefresh = () => {
+    setUpdate(!update);
+  }
 
   useEffect(() => {
     const AuthStr = `Token ${USER_TOKEN}`;
@@ -118,6 +123,22 @@ export default function MyAccountContainer({ children, ...rest }) {
     getUserBalance();
   }, [isFocused])
 
+  useEffect(() => {
+    const AuthStr = `Token ${USER_TOKEN}`;
+    async function getUserBalance() {
+      await axios.get(`${API_URL}/api/finance/balance/`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setUserBalance(response.data);
+      })
+      .catch((error) => {
+        console.log("================MyAccountContainer===============");
+        console.log(error);
+      })
+    }
+
+    getUserBalance();
+  }, [update])
+
   
   if (!loaded) {
     return null;
@@ -127,7 +148,7 @@ export default function MyAccountContainer({ children, ...rest }) {
     <MyAccountContainerBox {...rest} onPress={() => route.name == 'Main' ? navigation.navigate('MyAccountDetails') : null}>
       <MyAccountHeaderContainer>
         <MyAccountTitle>내 계좌</MyAccountTitle>
-        <RefreshImageContainer>
+        <RefreshImageContainer onPress={() => handleRefresh()}>
           <RefreshImage source={refresh} />
         </RefreshImageContainer>
       </MyAccountHeaderContainer>

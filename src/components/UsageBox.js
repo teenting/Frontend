@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const EachUsageContainer = styled.View`
   /* background-color: blue; */
   width: 100%;
-  height: 15%;
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -57,7 +57,7 @@ const UsageInfoPayContainter = styled.View`
 `;
 
 const UsageInfoPay = styled.Text`
-  color: #00BE92;
+  color: ${(props) => props.color};
   font-size: 15px;
   text-align: right;
   padding-right: 10px;
@@ -77,7 +77,12 @@ export default function UsageBox(data) {
         <UsageInfoBank>농협은행</UsageInfoBank>
       </UsageInfoContainer>
       <UsageInfoPayContainter>
-        <UsageInfoPay>+{data.data.tram}원</UsageInfoPay>
+        { data.data.mnrcDrotDsnc <= 2 ? (
+          <UsageInfoPay color='#00BE92'>+ {data.data.tram}원</UsageInfoPay>
+        ) : (
+          <UsageInfoPay color='#f05c5c'>- {data.data.tram}원</UsageInfoPay>
+        ) }
+        
       </UsageInfoPayContainter>
     </EachUsageContainer>
   )
