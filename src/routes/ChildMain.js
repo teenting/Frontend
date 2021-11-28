@@ -170,7 +170,7 @@ export default function ChildMain({ parentid, childname, id}) {
       
       <OuterAccountContainer>
         <ButtonsContainer>
-          <TransferButton onPress={() => navigation.push('Transfer', { childId: id, childname: childname })}>
+          <TransferButton onPress={() => navigation.push('Transfer', { childId: id, childname: childname, reward: '' })}>
             <ButtonTitle>송금 하기</ButtonTitle>
           </TransferButton>
           <LimitButton>

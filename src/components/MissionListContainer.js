@@ -100,7 +100,7 @@ const TransferButtonContainer = styled.View`
 `;
 
 const TransferButton = styled.TouchableOpacity`
-  background-color: #00ac84;
+  background-color: ${(props) => props.backgroundColor};
   border-radius: 10px;
   width: 80%;
   height: 50%;
@@ -110,20 +110,19 @@ const TransferButton = styled.TouchableOpacity`
 
 const TransferText = styled.Text`
   font-size: 15px;
-  color: white;
+  color: ${(props) => props.color};
 `;
 
-export default function MissionListContainer({ childname, missionId, mission, resultModalVisible, setResultModalVisible} ) {
+export default function MissionListContainer({ childId, childname, missionId, mission, refresh, setRefresh } ) {
+  const [resultModalVisible, setResultModalVisible] = useState(false);
   const statusId = mission.status;
   const navigation = useNavigation();
 
   return (
     <>
-    <MissionResultModal childname={childname} missionId={missionId} contentData={mission} visible={resultModalVisible} setVisible={setResultModalVisible} />
+    <MissionResultModal childname={childname} refresh={refresh} setRefresh={setRefresh} missionId={missionId} contentData={mission} visible={resultModalVisible} setVisible={setResultModalVisible} />
     <EachMissionContainer onPress={() => {
       setResultModalVisible(true);
-      console.log('Mission Open');
-      console.log(mission);
     }}>
 
       <MissionResultContainer>
@@ -139,10 +138,14 @@ export default function MissionListContainer({ childname, missionId, mission, re
 
       <TransferButtonContainer>
         { statusId == 1 ? (
-          <TransferButton onPress={() => navigation.push('Transfer', { childId: id, childname: childname, reward: mission.reward })}>
-          <TransferText>송금</TransferText>
-        </TransferButton>
-        ) : null}
+          <TransferButton backgroundColor='#00ac84' onPress={() => navigation.push('Transfer', { childId: childId, childname: childname, reward: mission.reward, missionId: missionId })}>
+            <TransferText color='white'>송금</TransferText>
+          </TransferButton>
+        ) : ( statusId == 3 ? (
+          <TransferButton backgroundColor='#D5D5D5'>
+            <TransferText color='#505050'>송금</TransferText>
+          </TransferButton>
+        ) : null )}
       </TransferButtonContainer>
 
     </EachMissionContainer>

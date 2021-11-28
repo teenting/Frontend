@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
 import MissionListContainer from '../components/MissionListContainer';
@@ -9,8 +9,6 @@ import { API_URL } from '../../utils/API_URL';
 import { USER_TOKEN } from '../../utils/Token';
 import axios from 'axios';
 import { useIsFocused } from '@react-navigation/core';
-
-const GOAL_PERCENTAGE = 80;
 
 // 전체 화면
 const Screen = styled.View`
@@ -26,6 +24,8 @@ const NameContainer = styled.View`
   /* background-color: rebeccapurple; */
   width: 100%;
   height: 15%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const NameTitle = styled.Text`
@@ -33,6 +33,32 @@ const NameTitle = styled.Text`
   text-align: center;
   color: #ffffff;
   font-weight: bold;
+`;
+
+const AcheivementTextContainer = styled.View`
+  /* background-color: wheat; */
+  width: 100%;
+  height: 55%;
+  justify-content: center;
+`;
+
+const AcheivementText = styled.Text`
+  font-size: 25px;
+  text-align: center;
+  color: white;
+`;
+
+const AcheivementWarningContainer = styled.View`
+  /* background-color: tomato; */
+  width: 100%;
+  height: 20%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AcheivementWarningText = styled.Text`
+  color: #CECECE;
+  font-size: 13px;
 `;
 
 // 퍼센트 바 Layout
@@ -59,7 +85,7 @@ const GoalGraph = styled.View`
 // 퍼센트 바 진행도
 const GoalGraphPercent = styled.View`
   background-color: #FDD4C0;
-  width: ${GOAL_PERCENTAGE}%;
+  width: ${(props) => props.width}%;
   height: 100%;
   position: absolute;
   border-radius: 10px;
@@ -164,26 +190,14 @@ const PlusButtonTitle = styled.Text`
 `;
 
 export default function Mission({ parentid, childname, id }) {
-  const [resultModalVisible, setResultModalVisible] = useState(false);
+  const [goalPercentage, setGoalPercentage] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [missionData, setMissionData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [missionAchievement, setMissionAchievement] = useState([]);
+  const [refresh, setRefresh] = useState(true);
   const isFocused = useIsFocused();
 
-
-  useEffect(() => {
-    async function getMissionList() {
-      const AuthStr = `Token ${USER_TOKEN}`;
-      axios.get(`${API_URL}/api/assignment/mission/?childId=${id}`, { headers: { Authorization: AuthStr } })
-      .then((response) => {
-        setMissionData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    }
-    getMissionList();
-  }, [isFocused])
-
   useEffect(() => {
     async function getMissionList() {
       const AuthStr = `Token ${USER_TOKEN}`;
@@ -196,11 +210,35 @@ export default function Mission({ parentid, childname, id }) {
       })
     }
 
+    async function getAchievement() {
+      const AuthStr = `Token ${USER_TOKEN}`;
+      axios.get(`${API_URL}/api/assignment/achievement/?childId=${id}`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setMissionAchievement(response.data);
+        let level = Number(response.data[0].level);
+        let score = Number(response.data[0].score);
+        let percentage = (score - ( 500 * ( level - 1 ))) / 500 * 100;
+        percentage = Math.round(percentage);
+        setGoalPercentage(percentage);
+      }) 
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => setIsLoading(false))
+    }
+
     getMissionList();
-  }, [modalVisible])
+    getAchievement();
+  }, [isFocused, modalVisible, refresh]);
 
   const handleNewMission = () => {
     setModalVisible(true);
+  }
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator color="#00ac84"/>
+    )
   }
 
   return (
@@ -209,14 +247,20 @@ export default function Mission({ parentid, childname, id }) {
 
       <NameContainer>
         <NameTitle>{childname}</NameTitle>
+        <AcheivementTextContainer>
+          <AcheivementText>{missionAchievement[0].level}단계</AcheivementText>
+        </AcheivementTextContainer>
+        <AcheivementWarningContainer>
+          <AcheivementWarningText>*송금이 완료되면 성취도가 올라갑니다</AcheivementWarningText>
+        </AcheivementWarningContainer>
       </NameContainer>
 
       <GoalContainer>
         <GoalGraph>
-          <GoalGraphPercent>
+          <GoalGraphPercent width={goalPercentage}>
             <GoalPointContainer>
               <GoalNumberContainer>
-                <GoalNumberTitle>{GOAL_PERCENTAGE}%</GoalNumberTitle>
+                <GoalNumberTitle>{goalPercentage}%</GoalNumberTitle>
               </GoalNumberContainer>
               <GoalPointCircle />
             </GoalPointContainer>
@@ -229,12 +273,14 @@ export default function Mission({ parentid, childname, id }) {
           <MissionScroll>
           { missionData.reverse().map((mission) => (
             <MissionListContainer
+              childId={id}
               childname={childname}
               key={mission.id}
               missionId={mission.id}
               mission={mission}
-              resultModalVisible={resultModalVisible}
-              setResultModalVisible={setResultModalVisible}>
+              refresh={refresh}
+              setRefresh={setRefresh}
+              >
             </MissionListContainer>
           )) }
           </MissionScroll>

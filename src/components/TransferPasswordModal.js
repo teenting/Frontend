@@ -6,6 +6,7 @@ import TransferSuccess from '../routes/TransferSuccess';
 import axios from 'axios';
 import { API_URL } from '../../utils/API_URL';
 import { USER_TOKEN } from '../../utils/Token';
+import { useNavigation, useRoute } from '@react-navigation/core';
 
 const NumberList = [ {id: 1, text: '1'}, {id: 2, text: '2'}, {id: 3, text: '3'}, {id: 4, text: '4'}, {id: 5, text: '5'}, {id: 6, text: '6'}, {id: 7, text: '7'}, {id: 8, text: '8'}, {id: 9, text: '9'}, {id: 10, text: ''}, {id: 11, text: '0'} ];
 const testPassword = 123456;
@@ -207,8 +208,11 @@ const PasswordCheck = styled.Text`
 `;
 
 
-export default function TransferPasswordModal({ childname, childId, money, visible, setVisible }) {
+export default function TransferPasswordModal({ childname, missionId, childId, money, visible, setVisible }) {
   const [passNum, setPassNum] = useState(0);
+  const [splash, setSplash] = useState(true);
+  const navigation = useNavigation();
+  const route = useRoute();
   const [loaded] = useFonts({
     ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
     Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
@@ -217,8 +221,6 @@ export default function TransferPasswordModal({ childname, childId, money, visib
   });
 
   const transferringMoney = Number(money);
-  
-
 
   const handleInput = (number) => {
     let form = new FormData();
@@ -240,11 +242,22 @@ export default function TransferPasswordModal({ childname, childId, money, visib
       PasswordBubbleList[5].active = false;
       if (numPassword === testPassword) {
         form.append('tram', transferringMoney);
-
         axios.post(`${API_URL}/api/finance/remittance?childId=${childId}`, form, { headers: { Authorization : AuthStr } })
         .then((response) => {
-          console.log(response);
-          alert('송금 성공!');
+          if ( missionId ) {
+            let missionForm = new FormData();
+            missionForm.append('status', 3);
+            const AuthStr = `Token ${USER_TOKEN}`;
+            axios.put(`${API_URL}/api/assignment/mission/${missionId}/`, missionForm, { headers : { Authorization: AuthStr }})
+            .then((response) => {
+              alert('송금 성공!');
+              setVisible(false);
+              navigation.pop();
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -293,7 +306,6 @@ export default function TransferPasswordModal({ childname, childId, money, visib
         <ModalScreen>
           <ModalHeader>
             <TouchableOpacity onPress={() => {
-              console.log(visible);
               setVisible(false);
             }}>
               <CloseButton source={closeButtonImage} />
@@ -321,9 +333,9 @@ export default function TransferPasswordModal({ childname, childId, money, visib
           {/* 모달 비밀번호 키패드 */}
           <KeyPadContainer>
             <KeyPad>
-            { NumberList.map((id, text) => (
-                <NumberPad key={id} onPress={() => handleInput(text)}>
-                  <NumberText>{text}</NumberText>
+            { NumberList.map((number) => (
+                <NumberPad key={number.id} onPress={() => handleInput(number.text)}>
+                  <NumberText>{number.text}</NumberText>
                 </NumberPad>
             ) )}
               <NumberPad onPress={() => {
