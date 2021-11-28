@@ -192,7 +192,7 @@ const ButtonText = styled.Text`
 
 
 
-export default function MissionResultModal({ childname, content, missionId, contentData, visible, setVisible }) {
+export default function MissionResultModal({ childname, content, refresh, setRefresh, missionId, contentData, visible, setVisible }) {
   const [statusUpdate, setStatusUpdate] = useState(false);
   const [missionContent, setMissionContent] = useState({});
   const [loaded] = useFonts({
@@ -202,18 +202,17 @@ export default function MissionResultModal({ childname, content, missionId, cont
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
 
-  console.log('******************');
-  console.log("content", contentData.content);
-
-
   const handleStatusUpdate = (statusNum) => {
-    console.log(missionId);
     let form = new FormData();
     form.append('status', statusNum);
     const AuthStr = `Token ${USER_TOKEN}`;
     axios.put(`${API_URL}/api/assignment/mission/${missionId}/`, form, { headers : { Authorization: AuthStr }})
     .then((response) => {
       setVisible(false);
+      setRefresh(!refresh);
+    })
+    .catch((error) => {
+      console.log(error);
     })
   }
 
@@ -233,8 +232,7 @@ export default function MissionResultModal({ childname, content, missionId, cont
           <ModalMain>
             <ModalHeader>
                 <TouchableOpacity onPress={() => {
-                  console.log('What;s in the modal');
-                  console.log(content);
+                  setVisible(false);
                 }}>
                   <CloseButton source={closeButtonImage} />
                 </TouchableOpacity>

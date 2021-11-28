@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import BackButtonHeader from '../components/BackButtonHeader';
 import { useFonts } from 'expo-font';
 import TransferPasswordModal from '../components/TransferPasswordModal';
+import { useIsFocused } from '@react-navigation/core';
 
 const NumberList = [ {id: 1, text: '1'}, {id: 2, text: '2'}, {id: 3, text: '3'}, {id: 4, text: '4'}, {id: 5, text: '5'}, {id: 6, text: '6'}, {id: 7, text: '7'}, {id: 8, text: '8'}, {id: 9, text: '9'}, {id: 10, text: ''}, {id: 11, text: '0'} ];
 
@@ -127,20 +128,15 @@ const TransferButtonImage = styled.Image`
 `;
 
 export default function Transfer({ route }) {
-  const [num, setNum] = useState('');
+  const [num, setNum] = useState(String(route.params.reward));
   const [modalVisible, setModalVisible] = useState(false);
+  const isFocused = useIsFocused();
   const [loaded] = useFonts({
     ModernSans: require('../styles/fonts/ModernSans_Font/ModernSans_Light.ttf'),
     Helvetica_Bold: require('../styles/fonts/Helvetica_Font/Helvetica_Bold.ttf'),
     Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
-  console.log(route);
-
-  // if (route.params.reward) {
-  //   let reward = String(route.params.reward);
-  //   console.log(reward);
-  // }
 
   let id = route.params.childId;
   let childName = route.params.childname;
@@ -197,7 +193,7 @@ export default function Transfer({ route }) {
       </SubmitButtonContainer>
 
         {/* 모달 화면 */}
-      <TransferPasswordModal childname={childName} childId={id} money={num} visible={modalVisible} setVisible={setModalVisible} />
+      <TransferPasswordModal childname={childName} missionId={route.params.missionId} childId={id} money={num} visible={modalVisible} setVisible={setModalVisible} />
     </Screen>
   )
 }

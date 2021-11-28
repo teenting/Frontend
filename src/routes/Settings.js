@@ -87,7 +87,7 @@ export default function Settings() {
     <Screen>
       <BackButtonHeader />
       <MySettingsContainer>
-        <TabContainer onPress={() => navigation.push('TransferSuccess')}>
+        <TabContainer>
           <TabText>내 정보</TabText>
           <TabArrow source={more} />
         </TabContainer>

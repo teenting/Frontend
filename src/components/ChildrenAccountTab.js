@@ -160,7 +160,7 @@ export default function ChildrenAccountTab() {
         </ChildrenMoney>
       </ChildrenMoneyContainer>
       <TransferTabContainer>
-        <TransferTab onPress={() => navigation.push('Transfer', { childId: child.id, childname: child.firstname })}>
+        <TransferTab onPress={() => navigation.push('Transfer', { childId: child.id, childname: child.firstname, reward: '' })}>
           <InnerTransferTabContainer>
             <TransferTabText>송금하기</TransferTabText>
             <TransferTabImage source={rightArrow}/>
