@@ -57,7 +57,7 @@ const UsageInfoPayContainter = styled.View`
 `;
 
 const UsageInfoPay = styled.Text`
-  color: #00BE92;
+  color: ${(props) => props.color};
   font-size: 15px;
   text-align: right;
   padding-right: 10px;
@@ -77,7 +77,11 @@ export default function ChildUsageBox({ childUsageData }) {
         <UsageInfoBank>농협은행</UsageInfoBank>
       </UsageInfoContainer>
       <UsageInfoPayContainter>
-        <UsageInfoPay>+{childUsageData.tram}원</UsageInfoPay>
+        { childUsageData.mnrcDrotDsnc <= 2 ? (
+          <UsageInfoPay color='#00BE92'>+ {childUsageData.tram}원</UsageInfoPay>
+        ) : (
+          <UsageInfoPay color='#f05c5c'>- {childUsageData.tram}원</UsageInfoPay>
+        ) }
       </UsageInfoPayContainter>
     </EachUsageContainer>
   )
