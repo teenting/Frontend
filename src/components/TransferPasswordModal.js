@@ -257,6 +257,10 @@ export default function TransferPasswordModal({ childname, missionId, childId, m
             .catch((error) => {
               console.log(error);
             })
+          } else {
+            alert('송금 성공!');
+            setVisible(false);
+            navigation.pop();
           }
         })
         .catch((error) => {

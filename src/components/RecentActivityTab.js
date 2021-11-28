@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 const ActivityList = [
   {
     id: 1,
-    text: '정님께 2개의 미션을 전송하였습니다'
+    text: '진경님께 2개의 미션을 전송하였습니다'
   },
   {
     id: 2,
