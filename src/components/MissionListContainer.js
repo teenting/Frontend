@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import MissionResultModal from './MissionResultModal';
+import { useNavigation } from '@react-navigation/core';
 
 const success = require('../styles/images/icon/check_green.png');
 const failure = require('../styles/images/icon/x_red.png');
@@ -114,6 +115,7 @@ const TransferText = styled.Text`
 
 export default function MissionListContainer({ childname, missionId, mission, resultModalVisible, setResultModalVisible} ) {
   const statusId = mission.status;
+  const navigation = useNavigation();
 
   return (
     <>
@@ -137,7 +139,7 @@ export default function MissionListContainer({ childname, missionId, mission, re
 
       <TransferButtonContainer>
         { statusId == 1 ? (
-          <TransferButton>
+          <TransferButton onPress={() => navigation.push('Transfer', { childId: id, childname: childname, reward: mission.reward })}>
           <TransferText>송금</TransferText>
         </TransferButton>
         ) : null}

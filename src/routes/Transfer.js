@@ -135,6 +135,12 @@ export default function Transfer({ route }) {
     Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
+  console.log(route);
+
+  // if (route.params.reward) {
+  //   let reward = String(route.params.reward);
+  //   console.log(reward);
+  // }
 
   let id = route.params.childId;
   let childName = route.params.childname;
@@ -169,7 +175,7 @@ export default function Transfer({ route }) {
       </BackButtonHeader>
       <MoneyInputContainer>
         <InnerMoneyInputContainer>
-          <MoneyInput value={num} maxLength={10} onChangeText={setNum}></MoneyInput>
+            <MoneyInput value={num} maxLength={10} onChangeText={setNum}></MoneyInput>
           <MoneyUnitText>원</MoneyUnitText>
         </InnerMoneyInputContainer>
       </MoneyInputContainer>
