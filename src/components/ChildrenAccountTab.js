@@ -1,6 +1,6 @@
 // 메인화면에서 자녀 계좌 보여줄 수 있는 탭
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, TouchableOpacityBase, View } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -136,9 +136,7 @@ export default function ChildrenAccountTab() {
 
   if (isLoading) {
     return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
+      <ActivityIndicator color="#00ac84"/>
     )
   }
   

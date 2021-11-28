@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import styled from 'styled-components/native';
 import { useRoute } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -94,6 +94,7 @@ export default function ChildAccountContainer({ childId, children, ...rest }) {
   const navigation = useNavigation();
   const [childBalance, setChildBalance] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [update, setUpdate] = useState(false);
   const isFocused = useIsFocused();
   const route = useRoute();
   const [loaded] = useFonts({
@@ -102,6 +103,11 @@ export default function ChildAccountContainer({ childId, children, ...rest }) {
     Helvetica_Light: require('../styles/fonts/Helvetica_Font/Helvetica_Light.ttf'),
     Helvetica: require('../styles/fonts/Helvetica_Font/Helvetica.ttf'),
   });
+
+  const handleRefresh = () => {
+    setUpdate(!update);
+  }
+
 
   useEffect(() => {
     const AuthStr = `Token ${USER_TOKEN}`;
@@ -123,11 +129,30 @@ export default function ChildAccountContainer({ childId, children, ...rest }) {
 
   }, [isFocused])
 
+  useEffect(() => {
+    const AuthStr = `Token ${USER_TOKEN}`;
+
+    async function getChildBalance() {
+      await axios.get(`${API_URL}/api/finance/balance/child`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        setChildBalance(response.data);
+      })
+      .catch((error) => {
+        console.log("================ChildAccountContainer===============")
+        console.log(error);
+      })
+      .finally(() => setIsLoading(false))
+    }
+
+    getChildBalance();
+
+
+  }, [update])
+
+
   if (isLoading) {
     return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
+      <ActivityIndicator />
     )
   }
   
@@ -140,7 +165,7 @@ export default function ChildAccountContainer({ childId, children, ...rest }) {
     <MyAccountContainerBox {...rest} onPress={() => route.name == 'Main' ? navigation.navigate('MyAccountDetails') : null}>
       <MyAccountHeaderContainer>
         <MyAccountTitle>{childBalance[childId - 1].firstname}의 계좌</MyAccountTitle>
-        <RefreshImageContainer>
+        <RefreshImageContainer onPress={() => handleRefresh()}>
           <RefreshImage source={refresh} />
         </RefreshImageContainer>
       </MyAccountHeaderContainer>

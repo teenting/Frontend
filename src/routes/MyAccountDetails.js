@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, ActivityIndicator } from 'react-native';
 import styled from 'styled-components';
 import BackButtonHeader from '../components/BackButtonHeader';
 import MyAccountContainer from '../components/MyAccountContainer';
@@ -128,15 +128,11 @@ const UsageList = styled.View`
   background-color: white;
   width: 90%;
   height: 90%;
-  border-radius: 20px;
-  padding-top: 10px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding-top: 8px;
   display: flex;
   flex-direction: column;
-`;
-
-const Footer = styled.View`
-  background-color: thistle;
-  width: 100%;
 `;
 
 export default function MyAccountDetails() {
@@ -169,7 +165,7 @@ export default function MyAccountDetails() {
       
       <OuterAccountContainer>
         <ButtonsContainer>
-          <TransferButton onPress={() => navigation.push('Transfer')}>
+          <TransferButton>
             <ButtonTitle>송금 하기</ButtonTitle>
           </TransferButton>
           <ChildAddButton>
@@ -186,12 +182,11 @@ export default function MyAccountDetails() {
 
         <UsageListContainer>
           <UsageList>
-            <ScrollView style={{ flexGrow:0 }}>
+            <ScrollView>
               {usageData.map((data, index) => (
                 <UsageBox key={index} data={data} />
               ))}
             </ScrollView>
-            <Footer />
           </UsageList>
         </UsageListContainer>
       </UsageContainer>
