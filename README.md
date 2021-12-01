@@ -1,2 +1,28 @@
-# Frontend
-Fintech Projects for family, using React-Native
+# TeenTing
+#### 💵 Teen(10대) + Ting(동전이 떨어지는 의성어)
+#### 올바른 경제관념의 시작, 부모와 함께 하는 용돈 관리 앱
+
+급변하는 디지털 사회 속에서, 많은 핀테크 앱들과 금융 앱들이 생겨나고 있지만, 10대들이 경제 관념을 배우기에는 핀테크 앱들로부터 소외되었다고 생각하였습니다. 그래서 부모가 자녀의 용돈 사용 방식을 관리하고, 부모가 부여하는 미션을 통해 스스로 수입을 창출하고 소비하여 돈의 흐름에 대해 배울 수 있는 앱입니다.
+***
+### ✔️ 핵심 페이지
+#### 1. 송금 페이지
+> 부모가 자녀에게 송금 금액을 입력하고 비밀번호를 누르면 자녀와 부모 사용 내역에 모두 업데이트됩니다.
+> 
+> 농협 Developers API의 출금 / 입금 API를 활용하여 자체 송금 API를 만들었습니다.
+
+<img src="https://user-images.githubusercontent.com/81177665/144273187-0c008521-fe8a-40c3-aa6f-0655f1b794c1.gif" width="200" height="400" />
+
+
+---
+#### 2. 미션 페이지
+> 부모가 자녀에게 미션을 부여하고 자녀가 미션을 수행하면, 미리 적어둔 보상 금액만큼 자녀에게 송금합니다. 송금 완료 시, 송금하는 금액의 10%만큼 달성률이 채워지며 500점 단위로 단계가 상승합니다.
+![image](https://user-images.githubusercontent.com/81177665/144298512-637af825-8bc3-488b-a555-b4b7a72e1403.gif)
+
+<img src="https://user-images.githubusercontent.com/81177665/144298175-5fcbac20-f3e7-4328-abc5-cd40261f07ac.gif" width="200" height="400" />
+<img src="https://user-images.githubusercontent.com/81177665/144273187-0c008521-fe8a-40c3-aa6f-0655f1b794c1.gif" width="200" height="400" />
+
+---
+#### 3. 분석 페이지
+> 자녀가 사용한 지출 내역을 기간별/카테고리별로 조회할 수 있습니다.
+
+---
