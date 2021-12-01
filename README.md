@@ -16,7 +16,6 @@
 ---
 #### 2. 미션 페이지
 > 부모가 자녀에게 미션을 부여하고 자녀가 미션을 수행하면, 미리 적어둔 보상 금액만큼 자녀에게 송금합니다. 송금 완료 시, 송금하는 금액의 10%만큼 달성률이 채워지며 500점 단위로 단계가 상승합니다.
-![image](https://user-images.githubusercontent.com/81177665/144298512-637af825-8bc3-488b-a555-b4b7a72e1403.gif)
 
 <img src="https://user-images.githubusercontent.com/81177665/144298175-5fcbac20-f3e7-4328-abc5-cd40261f07ac.gif" width="200" height="400" />
 <img src="https://user-images.githubusercontent.com/81177665/144273187-0c008521-fe8a-40c3-aa6f-0655f1b794c1.gif" width="200" height="400" />
